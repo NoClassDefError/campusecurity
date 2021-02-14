@@ -16,7 +16,7 @@ public class User {
     private String id;
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @Basic
@@ -27,7 +27,12 @@ public class User {
     @Column(name = "description")
     private String description;
 
+    /**
+     * 0 超级管理员，有所有权限
+     * 1 普通管理员，没有账号注册权限
+     * 2 只读
+     */
     @Basic
-    @Column(name = "auth")
+    @Column(name = "auth", nullable = false, columnDefinition = "integer default 1")
     private Integer auth;
 }
