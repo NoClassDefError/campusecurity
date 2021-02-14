@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        default-label: master
+        git:
+          uri: https://github.com/NoClassDefError/campusecurity
+          search-paths: configuration
+#          username: NoClassDefError
+#          password: Gehanchen221792
+server:
+  port: 8888
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

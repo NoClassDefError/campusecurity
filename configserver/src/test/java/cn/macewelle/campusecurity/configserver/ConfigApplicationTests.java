@@ -1,4 +1,4 @@
-package cn.macewelle.campusecurity.config;
+package cn.macewelle.campusecurity.configserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

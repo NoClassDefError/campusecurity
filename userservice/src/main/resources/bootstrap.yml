@@ -7,3 +7,8 @@ server:
 spring:
   application:
     name: userservice
+  cloud:
+    config:
+      label: master
+      profile: dev
+      uri: http://localhost:8888
