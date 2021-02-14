@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.7.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>cn.macswelle</groupId>
+    <artifactId>campusecurity</artifactId>
+
+    <version>1.0</version>
+    <name>${project.artifactId}</name>
+    <description>
+        校园安防系统分布式物联网平台，基于Spring Cloud框架，实现设备互联、管理、数据采集、代码生成、快速开发和可视化等，
+        兼容多种流行的物联网数据接入协议（Mqtt\Socket\Modbus-Tcp\Rtsp\Rtmp\Siemens PLC S7\OpcUa\OpcDa...）
+    </description>
+    <modules>
+        <module>userservice</module>
+        <module>facialrecognision</module>
+        <module>dataprocess</module>
+        <module>devicemanage</module>
+        <module>eureka</module>
+        <module>gateway</module>
+        <module>configserver</module>
+        <module>common</module>
+    </modules>
+    <properties>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
+        <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
+        <spring-platform.version>Cairo-SR8</spring-platform.version>
+        <spring-boot-admin.version>2.3.1</spring-boot-admin.version>
+    </properties>
+    <dependencies>
+        <!-- Spring Configuration-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+            <version>2.2.6.RELEASE</version>
+        </dependency>
+        <!-- Spring Aop -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+        </dependency>
+
+        <!-- Eureka -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- Hystrix -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <version>2.2.6.RELEASE</version>
+        </dependency>
+
+        <!-- Actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- Admin -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.18</version>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.10</version>
+                <configuration>
+                    <contextDirectory>src/main/docker</contextDirectory>
+                    <repository>springboot/${project.artifactId}</repository>
+                    <tag>v1</tag>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
