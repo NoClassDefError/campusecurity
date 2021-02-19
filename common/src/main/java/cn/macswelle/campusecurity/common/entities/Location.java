@@ -19,6 +19,10 @@ public class Location {
     @Column(name = "name")
     private String name;
 
+    @Basic
+    @Column(name = "description")
+    private String description;
+
     @OneToMany(targetEntity = Record.class, mappedBy = "location", cascade = CascadeType.DETACH)
     private List<Record> personnel;
 

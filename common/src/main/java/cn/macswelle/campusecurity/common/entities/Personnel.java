@@ -6,6 +6,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * 包括人员与车辆
+ */
 @Data
 @Entity
 public class Personnel {
@@ -25,6 +28,10 @@ public class Personnel {
     @Basic
     @Column(name = "category", columnDefinition = "integer default 1", nullable = false)
     private Integer category = 1;
+
+    @Basic
+    @Column(name = "description")
+    private String description;
 
     @OneToMany(targetEntity = Record.class, mappedBy = "personnel", cascade = CascadeType.DETACH)
     private List<Record> places;
