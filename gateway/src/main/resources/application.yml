@@ -6,23 +6,34 @@ spring:
     name: gateway-server
   cloud:
     gateway:
+      #配置自动的根据微服务名称进行路由转发
       discovery:
         locator:
-          enabled: false
-          lowerCaseServiceId: true
+          enabled: true #开启根据微服务名称自动转发
+          lowerCaseServiceId: true #微服务名称以小写呈现
       routes:
+        # user service
         - id: userservice
-          uri: lb://USERSERVICE
+          uri: lb://userservice # lb 是load balance，代表从注册中心获取服务，是面向服务的动态路由
           predicates:
-            - Path=/demo/**
+            - Path=/user/**
           filters:
+          #  - RewritePath=  路径重写
             - StripPrefix=1
             - RequestTime=true
+        # data
+#        - id: dataprocess
+#
+#          predicates:
+
+
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true #使用ip地址注册
 
 logging:
   level:

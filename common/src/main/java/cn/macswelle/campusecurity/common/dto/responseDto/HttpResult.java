@@ -1,4 +1,4 @@
-package cn.macswelle.campusecurity.common.dto;
+package cn.macswelle.campusecurity.common.dto.responseDto;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

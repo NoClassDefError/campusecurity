@@ -1,7 +1,7 @@
 package cn.macswelle.campusecurity.userservice.service;
 
-import cn.macswelle.campusecurity.common.dto.HttpResult;
-import cn.macswelle.campusecurity.userservice.dto.requestDto.SignUpDto;
+import cn.macswelle.campusecurity.common.dto.responseDto.HttpResult;
+import cn.macswelle.campusecurity.common.dto.requestDto.SignUpDto;
 
 public interface SignUpService {
     HttpResult signUp(SignUpDto signUpDto);

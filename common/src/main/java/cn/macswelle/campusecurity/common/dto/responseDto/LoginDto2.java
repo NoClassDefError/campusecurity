@@ -1,4 +1,4 @@
-package cn.macswelle.campusecurity.userservice.dto.responseDto;
+package cn.macswelle.campusecurity.common.dto.responseDto;
 
 import lombok.Data;
 
