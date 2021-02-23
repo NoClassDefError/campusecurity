@@ -4,11 +4,13 @@
     <file url="file://$PROJECT_DIR$/common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/configserver/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/dataprocess/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/devicemanage/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/facialrecognision/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nvrlistener/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nvrlistener/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tcpadapter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tcpadapter/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/userservice/src/main/java" charset="UTF-8" />
   </component>
 </project>

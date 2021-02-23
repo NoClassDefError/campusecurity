@@ -9,18 +9,19 @@
         <outputRelativeToContentRoot value="true" />
         <module name="userservice" />
         <module name="commons" />
+        <module name="tcpadapter" />
         <module name="campusecurity" />
         <module name="gateway" />
         <module name="eureka" />
-        <module name="facialrecognision" />
         <module name="devicemanage" />
         <module name="configserver" />
-        <module name="dataprocess" />
+        <module name="nvrlistener" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="center" target="1.8" />
       <module name="commons" target="1.5" />
+      <module name="dataprocess" target="1.8" />
       <module name="drivers" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -34,8 +35,9 @@
       <module name="devicemanage" options="-parameters" />
       <module name="drivers" options="-parameters" />
       <module name="eureka" options="-parameters" />
-      <module name="facialrecognision" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="nvrlistener" options="-parameters" />
+      <module name="tcpadapter" options="-parameters" />
       <module name="userservice" options="-parameters" />
     </option>
   </component>

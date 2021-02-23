@@ -31,7 +31,7 @@ public class Driver {
      * http协议 1
      * mqtt协议 2
      * modbus-tcp协议 3
-     * mqtt 协议 4
+     * rtmp 协议 4
      * opc-da 协议 5
      * opc-ua 协议 6
      * plcs7 协议 7

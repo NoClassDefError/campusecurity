@@ -8,9 +8,9 @@
         <version>1.0</version>
     </parent>
     <groupId>cn.macselle.campusecurity</groupId>
-    <artifactId>facialrecognision</artifactId>
+    <artifactId>tcpadapter</artifactId>
     <packaging>jar</packaging>
-    <description>人脸识别服务</description>
+    <description>设备通信服务之一，将tcp协议包裹成http协议</description>
 
     <dependencies>
         <dependency>

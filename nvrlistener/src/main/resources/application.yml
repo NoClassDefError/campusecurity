@@ -1,0 +1,15 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8764
+spring:
+  application:
+    name: userservice
+  cloud:
+    config:
+      label: master
+      profile: dev
+      uri: http://localhost:8888
+

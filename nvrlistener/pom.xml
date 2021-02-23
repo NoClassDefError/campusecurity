@@ -8,9 +8,9 @@
         <version>1.0</version>
     </parent>
     <groupId>cn.macswelle.campusecurity</groupId>
-    <artifactId>dataprocess</artifactId>
+    <artifactId>nvrlistener</artifactId>
     <packaging>jar</packaging>
-    <description>数据分析与文件处理服务</description>
+    <description>接口监听服务之一，用来监听特定的一款网络录像机NVR的http接口</description>
     <dependencies>
         <dependency>
             <groupId>cn.macswelle.campusecurity</groupId>
