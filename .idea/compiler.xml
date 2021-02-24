@@ -7,15 +7,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="feignApi" />
         <module name="userservice" />
         <module name="commons" />
         <module name="tcpadapter" />
-        <module name="campusecurity" />
         <module name="gateway" />
         <module name="eureka" />
+        <module name="nvrlistener" />
         <module name="devicemanage" />
         <module name="configserver" />
-        <module name="nvrlistener" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -23,6 +23,7 @@
       <module name="commons" target="1.5" />
       <module name="dataprocess" target="1.8" />
       <module name="drivers" target="1.8" />
+      <module name="feignApi" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -35,6 +36,7 @@
       <module name="devicemanage" options="-parameters" />
       <module name="drivers" options="-parameters" />
       <module name="eureka" options="-parameters" />
+      <module name="feignApi" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="nvrlistener" options="-parameters" />
       <module name="tcpadapter" options="-parameters" />

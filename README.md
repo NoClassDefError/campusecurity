@@ -19,3 +19,5 @@
 #### 获取适配器消息
 contextPath:/getInfo
 返回 json 对象继承自Adaptor类
+
+#### 
