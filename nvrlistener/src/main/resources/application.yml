@@ -6,10 +6,16 @@ server:
   port: 8764
 spring:
   application:
-    name: userservice
+    name: nvrlistener
   cloud:
     config:
       label: master
       profile: dev
       uri: http://localhost:8888
+#info:
+#  name: NVR GB31415
+#  location: 10#寝室
+#  version: 1.0
+#  independent: false #上位机，下面还有子设备
+#  description:
 

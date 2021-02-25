@@ -11,6 +11,7 @@
         <module name="userservice" />
         <module name="commons" />
         <module name="tcpadapter" />
+        <module name="feign-api" />
         <module name="gateway" />
         <module name="eureka" />
         <module name="nvrlistener" />
@@ -36,6 +37,7 @@
       <module name="devicemanage" options="-parameters" />
       <module name="drivers" options="-parameters" />
       <module name="eureka" options="-parameters" />
+      <module name="feign-api" options="-parameters" />
       <module name="feignApi" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="nvrlistener" options="-parameters" />

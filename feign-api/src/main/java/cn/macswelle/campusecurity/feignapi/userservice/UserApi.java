@@ -1,4 +1,4 @@
-package cn.macswelle.campusecurity.gateway.api;
+package cn.macswelle.campusecurity.feignapi.userservice;
 
 import cn.macswelle.campusecurity.common.dto.requestDto.LoginDto;
 import cn.macswelle.campusecurity.common.dto.requestDto.SignUpDto;
@@ -6,7 +6,7 @@ import cn.macswelle.campusecurity.common.dto.responseDto.HttpResult;
 import cn.macswelle.campusecurity.common.dto.responseDto.LoginDto2;
 import cn.macswelle.campusecurity.common.dto.responseDto.LogoutDto;
 import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
-import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 

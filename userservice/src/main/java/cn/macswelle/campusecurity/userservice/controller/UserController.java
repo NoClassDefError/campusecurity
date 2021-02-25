@@ -6,7 +6,7 @@ import cn.macswelle.campusecurity.common.dto.requestDto.LoginDto;
 import cn.macswelle.campusecurity.common.dto.responseDto.LoginDto2;
 import cn.macswelle.campusecurity.common.dto.responseDto.LogoutDto;
 import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
-import cn.macswelle.campusecurity.gateway.api.UserApi;
+import cn.macswelle.campusecurity.feignapi.userservice.UserApi;
 import cn.macswelle.campusecurity.userservice.service.LoginService;
 import cn.macswelle.campusecurity.userservice.service.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
