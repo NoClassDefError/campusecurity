@@ -24,6 +24,14 @@ public class Device {
     @Column(name = "description")
     private String description;
 
+    @Basic
+    @Column(name = "category")
+    private Integer category;
+
+    @Basic
+    @Column(name = "version")
+    private String version;
+
     @ManyToOne(targetEntity = Location.class)
     @JoinColumn(name = "location", referencedColumnName = "id")
     private Location location;

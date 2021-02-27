@@ -1,9 +1,9 @@
 package cn.macswelle.campusecurity.nvrlistener.controller;
 
 import cn.macswelle.campusecurity.common.dto.DeviceDto;
-import cn.macswelle.campusecurity.common.entities.Device;
 import cn.macswelle.campusecurity.feignapi.adapter.AdapterApi;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -17,12 +17,13 @@ import java.util.List;
 @RestController
 public class NvrListenerController implements AdapterApi {
 
-    @RequestMapping("/getDevices")
+    @RequestMapping(value = "/getInfo", method = RequestMethod.POST)
     @Override
     public List<DeviceDto> getDevice() {
         return null;
     }
 
+    @RequestMapping(value = "/getDevice", method = RequestMethod.POST)
     @Override
     public DeviceDto getInfo() {
         return new DeviceDto();

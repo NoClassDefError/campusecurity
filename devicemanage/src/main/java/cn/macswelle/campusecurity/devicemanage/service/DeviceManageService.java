@@ -2,6 +2,8 @@ package cn.macswelle.campusecurity.devicemanage.service;
 
 import cn.macswelle.campusecurity.common.dto.DeviceDto;
 import cn.macswelle.campusecurity.common.dto.LocationDto2;
+import cn.macswelle.campusecurity.common.dto.requestDto.RecordDto;
+import cn.macswelle.campusecurity.common.dto.responseDto.RecordDto2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +15,10 @@ import java.util.List;
  * 接受接口监听服务与设备通信服务通过消息总线传来的数据，写入数据库，包括何人何时出现在何地
  */
 public interface DeviceManageService {
-
-    ArrayList<DeviceDto> refreshServices();
-
-    void register(DeviceDto deviceDto);
-
+    //来自用户的请求
     List<DeviceDto> getSons(String id);
 
-    void cancel(String id);
+    ArrayList<DeviceDto> refreshServices();
 
     /**
      * 由于存在级联问题，location不能删除，只能修改基本信息
@@ -28,4 +26,17 @@ public interface DeviceManageService {
     String refractorOrAddLocation(LocationDto2 locationDto);
 
     List<LocationDto2> getLocations();
+
+    List<DeviceDto> getByLocation(String id);
+
+    List<RecordDto2> getRecords(String locationId, Long start, Long end);
+
+    //来自eureka的请求
+    void register(DeviceDto deviceDto);
+
+    void cancel(String id);
+
+    //来自硬件的请求
+    void addRecord(RecordDto dto);
+
 }

@@ -1,6 +1,7 @@
 package cn.macswelle.campusecurity.devicemanage.repositories;
 
 import cn.macswelle.campusecurity.common.entities.Device;
+import cn.macswelle.campusecurity.common.entities.Record;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DeviceRepository extends JpaRepository<Device, String>,
-        JpaSpecificationExecutor<Device> {
-    @Query("select l from Device l where l.location.id = ?1")
-    List<Device> findByLocation(String id);
+public interface RecordRepository extends JpaRepository<Record, String>,
+        JpaSpecificationExecutor<Record> {
+    @Query("select l from Record l where l.location.id = ?1 and l.createTime>?2 and l.createTime<?3")
+    List<Record> findByLocation(String id, Long start, Long end);
 }

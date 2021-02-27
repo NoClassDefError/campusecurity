@@ -23,7 +23,7 @@ public class Personnel {
     private String name;
 
     /**
-     * 1 人员 2 车辆 默认为1
+     * 1 人员 2 车辆 3 其他 默认为1
      */
     @Basic
     @Column(name = "category", columnDefinition = "integer default 1", nullable = false)

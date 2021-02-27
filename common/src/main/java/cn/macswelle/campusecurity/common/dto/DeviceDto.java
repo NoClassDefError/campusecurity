@@ -14,4 +14,5 @@ public class DeviceDto {
     private String description;
     private String version;
     private Integer category;
+    private String url;
 }

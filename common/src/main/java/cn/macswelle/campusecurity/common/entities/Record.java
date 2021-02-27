@@ -27,6 +27,13 @@ public class Record {
     @Column(name = "event")
     private String event;
 
+    /**
+     * 如果这个事件有文件记录的话，记录文件的url
+     */
+    @Basic
+    @Column(name = "file")
+    private String file;
+
     @ManyToOne(targetEntity = Location.class)
     @JoinColumn(name = "location", referencedColumnName = "id")
     private Location location;
