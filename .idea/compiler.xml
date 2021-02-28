@@ -33,6 +33,7 @@
       <module name="center" options="-parameters" />
       <module name="common" options="-parameters" />
       <module name="configserver" options="-parameters" />
+      <module name="database" options="-parameters" />
       <module name="dataprocess" options="-parameters" />
       <module name="devicemanage" options="-parameters" />
       <module name="drivers" options="-parameters" />

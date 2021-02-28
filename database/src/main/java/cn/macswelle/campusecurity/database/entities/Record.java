@@ -1,4 +1,4 @@
-package cn.macswelle.campusecurity.common.entities;
+package cn.macswelle.campusecurity.database.entities;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;

@@ -1,9 +1,6 @@
 package cn.macswelle.campusecurity.nvrlistener;
 
 import cn.macswelle.campusecurity.common.Adapter;
-import cn.macswelle.campusecurity.common.entities.Device;
-
-import java.util.List;
 
 public final class Info extends Adapter {
 

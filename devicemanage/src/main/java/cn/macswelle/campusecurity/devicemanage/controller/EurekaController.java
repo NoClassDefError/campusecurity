@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/eureka")
+@RestController("/device")
 public class EurekaController implements EurekaApi {
     @Autowired
     private DeviceManageService deviceManageService;

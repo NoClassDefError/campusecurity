@@ -1,6 +1,6 @@
-package cn.macswelle.campusecurity.devicemanage.repositories;
+package cn.macswelle.campusecurity.database.repositories;
 
-import cn.macswelle.campusecurity.common.entities.Location;
+import cn.macswelle.campusecurity.database.entities.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

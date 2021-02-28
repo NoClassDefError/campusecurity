@@ -2,15 +2,15 @@ package cn.macswelle.campusecurity.userservice.service;
 
 import cn.macswelle.campusecurity.common.dto.responseDto.HttpResult;
 import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
-import cn.macswelle.campusecurity.common.entities.User;
+import cn.macswelle.campusecurity.database.entities.User;
 
 import cn.macswelle.campusecurity.common.dto.requestDto.LoginDto;
 import cn.macswelle.campusecurity.common.dto.requestDto.SignUpDto;
 import cn.macswelle.campusecurity.common.dto.responseDto.LoginDto2;
 import cn.macswelle.campusecurity.common.dto.responseDto.LogoutDto;
 import cn.macswelle.campusecurity.common.utils.JwtUtil;
-import cn.macswelle.campusecurity.common.utils.KeyUtil;
-import cn.macswelle.campusecurity.userservice.repositories.UserRepository;
+
+import cn.macswelle.campusecurity.database.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,6 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements LoginService, SignUpService {
-
 
     @Autowired
     protected UserRepository userRepository;

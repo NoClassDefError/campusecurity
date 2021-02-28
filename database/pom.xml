@@ -8,21 +8,30 @@
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>cn.macswelle.campusecurity</groupId>
-    <artifactId>feign-api</artifactId>
+    <artifactId>database</artifactId>
+    <description>数据库支持</description>
+    <packaging>pom</packaging>
+
     <dependencies>
         <dependency>
-            <groupId>cn.macswelle.campusecurity</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.21</version>
         </dependency>
     </dependencies>
 </project>

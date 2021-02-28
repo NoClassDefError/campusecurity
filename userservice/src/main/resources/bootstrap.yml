@@ -12,3 +12,16 @@ spring:
       label: master
       profile: dev
       uri: http://localhost:8888
+  datasource:
+    url: jdbc:mysql://localhost:3306/campusecurity?serverTimezone=GMT
+    username: root
+    password: Gehanchen260817
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect

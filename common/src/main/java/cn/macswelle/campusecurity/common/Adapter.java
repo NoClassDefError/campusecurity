@@ -1,9 +1,5 @@
 package cn.macswelle.campusecurity.common;
 
-import cn.macswelle.campusecurity.common.entities.Device;
-
-import java.util.List;
-
 /**
  * 设备通信服务必须要继承这个类来描述自己的信息。
  */

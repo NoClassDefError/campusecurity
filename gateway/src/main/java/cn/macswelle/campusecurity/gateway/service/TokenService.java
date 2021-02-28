@@ -1,6 +1,6 @@
 package cn.macswelle.campusecurity.gateway.service;
 
-import cn.macswelle.campusecurity.common.entities.User;
+import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
 
 public interface TokenService {
     /**
@@ -11,7 +11,7 @@ public interface TokenService {
     /**
      * 生成用户的Token令牌，5小时失效
      */
-    String generateToken(User user);
+    String generateToken(UserDto user);
 
     /**
      * 校验用户的Token令牌是否有效

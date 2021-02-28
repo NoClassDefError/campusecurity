@@ -6,7 +6,7 @@ spring:
       server:
         default-label: master
         git:
-          uri: https://github.com/NoClassDefError/campusecurity
+          uri: https://gitee.com/NoClassDefFoundError/campusecurity
           search-paths: configuration
 #          username: NoClassDefError
 #          password: Gehanchen221792

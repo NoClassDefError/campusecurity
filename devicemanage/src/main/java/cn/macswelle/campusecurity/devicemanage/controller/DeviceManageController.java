@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController("/deviceManage")
+@RestController("/device")
 public class DeviceManageController implements ManagerApi {
     @Autowired
     private DeviceManageService deviceManageService;

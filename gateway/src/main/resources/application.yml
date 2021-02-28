@@ -17,16 +17,11 @@ spring:
           uri: lb://userservice # lb 是load balance，代表从注册中心获取服务，是面向服务的动态路由
           predicates:
             - Path=/user/**
-          filters:
-          #  - RewritePath=  路径重写
-            - StripPrefix=1
-            - RequestTime=true
-        # data
-#        - id: dataprocess
-#
-#          predicates:
-
-
+         # device manage
+        - id: devicemanage
+          uri: lb://devicemanage
+          predicates:
+            - Path=/device/**
 
 eureka:
   client:

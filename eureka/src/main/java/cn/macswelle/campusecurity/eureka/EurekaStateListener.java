@@ -6,13 +6,12 @@ import com.netflix.appinfo.InstanceInfo;
 import feign.Feign;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.server.event.EurekaInstanceCanceledEvent;
 import org.springframework.cloud.netflix.eureka.server.event.EurekaInstanceRegisteredEvent;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * 服务监听器
@@ -22,7 +21,7 @@ import javax.annotation.Resource;
 public class EurekaStateListener {
     private final static Logger logger = LoggerFactory.getLogger(EurekaStateListener.class);
 
-    @Resource
+    @Autowired
     private EurekaApi eurekaApi;
 
     @EventListener(condition = "#event.replication==false")

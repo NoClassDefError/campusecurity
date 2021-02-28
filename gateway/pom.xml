@@ -13,7 +13,7 @@
     <description>网关</description>
     <packaging>jar</packaging>
     <dependencies>
-        <!--注意spring cloud 与spring mvc依赖有冲突，不能并存-->
+        <!--注意spring cloud gateway与spring mvc依赖有冲突，不能并存-->
         <dependency>
             <groupId>cn.macswelle.campusecurity</groupId>
             <artifactId>common</artifactId>
@@ -23,27 +23,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-
     </dependencies>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
