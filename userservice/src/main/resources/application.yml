@@ -13,13 +13,13 @@ spring:
       profile: dev
       uri: http://localhost:8888
   datasource:
-    url: jdbc:mysql://localhost:3306/campusecurity?serverTimezone=GMT
+    url: jdbc:mysql://localhost:3306/campusecurity?serverTimezone=GMT&useSSL=false
     username: root
     password: Gehanchen260817
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     show-sql: true
     generate-ddl: true
     properties:
