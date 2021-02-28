@@ -10,7 +10,11 @@
 *各种前后端交互接口与服务集群内部接口详见feign-api包
 
 ## idea中各服务配置与启动方式
-    数据库 mysql jdbc:mysql://localhost:3306/campusecurity?serverTimezone=GMT
+按照顺序启动：
+
+    数据库: 
+        mysql jdbc:mysql://localhost:3306/campusecurity?serverTimezone=GMT
+        redis  localhost:6379
     注册发现中心 eureka  localhost:8761/eureka
     配置中心 configserver localhost:8888
     网关 geteway localhost:8081
@@ -19,3 +23,6 @@
     设备通信服务:
         NVR(摄像头的上位机)适配与通信服务 nvrlistener http://localhost:8764 
         烟雾报警器(独立硬件)适配与通信服务 tcpadapter http://localhost:8765
+
+## 数据库结构
+![img](./img/3.png)
