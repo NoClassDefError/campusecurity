@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>设备管理</title>
+</head>
+<body>
+<script src="../static/js/vendor/jquery-3.5.1.min.js"></script>
+<script src="../static/js/plugins.js"></script>
+<script src="../static/js/devicemanage.js"></script>
+<div>
+    <h1>校园安防系统</h1>
+</div>
+<div>
+    <div>
+        <div>
+            <ul>
+                <li>用户名 <span th:text="${user.getName()}"></span></li>
+                <li>ID <span th:text="${user.getId()}"></span></li>
+                <li>权限 <span th:text="${user.getAuth()}"></span></li>
+                <li>描述 <span th:text="${user.getDescription()}"></span></li>
+            </ul>
+        </div>
+        <div>
+            <form action="/changeDescription">
+                <p><input name="d" type="text"></p>
+                <input type="submit" name="修改描述">
+            </form>
+        </div>
+        <div>
+            <form action="/changePassword">
+                <p>旧密码<input name="origin" type="password"></p>
+                <p>新密码<input name="newP" type="password"></p>
+                <input type="submit" name="修改密码">
+            </form>
+        </div>
+        <div id="message" th:if="${not #strings.isEmpty(status)}" th:text="${status}"></div>
+    </div>
+    <div>
+        <div>
+            <form action="/addLocation">
+                <p>旧密码<input name="origin" type="password"></p>
+                <p>新密码<input name="newP" type="password"></p>
+                <input type="submit" name="修改密码">
+            </form>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>地点</th>
+                    <th>描述</th>
+                    <th>正在运行的设备数</th>
+                </tr>
+                <tr th:each="location:${#servletContext.getAttribute('locations')}">
+                    <td th:text="${location.getId()}"></td>
+                    <td th:text="${location.getName()}"></td>
+                    <td th:text="${location.getDescription()}"></td>
+                    <td>
+                        <button>查看这里正在运行的设备</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

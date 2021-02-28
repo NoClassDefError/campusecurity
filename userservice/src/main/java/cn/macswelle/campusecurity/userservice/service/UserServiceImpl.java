@@ -36,12 +36,13 @@ public class UserServiceImpl implements LoginService, SignUpService {
         User result = userRepository.findByNameAndPassword(dto.getUsername(), dto.getPassword()).get(0);
         if (result != null) {
             loginDto2.setStatus("success");
-            loginDto2.setId(result.getId());
+            String token = JwtUtil.generateToken(result.getId(), "gehanchen");
             loginDto2.setAuth(result.getAuth());
             loginDto2.setDescription(result.getDescription());
+            loginDto2.setId(result.getId());
             loginDto2.setName(result.getName());
             //记录登录状态，不能像单体应用那样，微服务架构存在session同步问题，要将session存在redis中
-            logger.info("access-token: " + JwtUtil.generateToken(result.getId(), "gehanchen"));
+            logger.info("access-token: " + token);
             logger.info("登录: " + result.toString());
             session.setAttribute("User", result);
         } else {
@@ -71,8 +72,19 @@ public class UserServiceImpl implements LoginService, SignUpService {
     }
 
     @Override
-    public Integer getAuth(String userId) {
-        return userRepository.findUserAuthById(userId);
+    public UserDto getUser(String token) {
+        String uerId = JwtUtil.getUserInfo(token);
+        User user = userRepository.findById(uerId).orElse(null);
+        UserDto userDto = new UserDto();
+        switch (user.getAuth()){
+            case 0:userDto.setAuth("超级管理员");break;
+            case 1:userDto.setAuth("管理员");break;
+            case 2:userDto.setAuth("只读");break;
+        }
+        userDto.setDescription(user.getDescription());
+        userDto.setId(user.getId());
+        userDto.setName(user.getName());
+        return userDto;
     }
 
     @Override

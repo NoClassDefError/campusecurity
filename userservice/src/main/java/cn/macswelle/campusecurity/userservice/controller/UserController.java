@@ -26,23 +26,29 @@ public class UserController implements UserApi {
     @Autowired
     private SignUpService signUpService;
 
+    @RequestMapping(name = "/getUser", method = RequestMethod.POST)
     @Override
-    public Integer getAuth(String userId) {
-        return loginService.getAuth(userId);
+    public UserDto getUser(String token) {
+        return loginService.getUser(token);
     }
 
     @RequestMapping(name = "/login", method = RequestMethod.POST)
-    public LoginDto2 login(LoginDto loginDto, HttpServletResponse response) {
+    public LoginDto2 login(LoginDto loginDto) {
         LoginDto2 result = loginService.login(loginDto);
-        if (result.getStatus().equals("success")) response.addHeader("user", result.getId());
+//        if (result.getStatus().equals("success")) response.addHeader("user", result.getId());
         return result;
     }
 
     @RequestMapping(name = "/logout", method = RequestMethod.POST)
-    public LogoutDto logoutDto(HttpServletResponse response) {
+    public LogoutDto logoutDto() {
         LogoutDto result = loginService.logout();
-        if (result.getStatus().equals("success")) response.addHeader("user", result.getId());
+//        if (result.getStatus().equals("success")) response.addHeader("user", result.getId());
         return result;
+    }
+
+    @Override
+    public LoginDto2 changeDescription(String d) {
+        return null;
     }
 
     @RequestMapping(name = "/changePassword", method = RequestMethod.POST)

@@ -11,5 +11,5 @@ public interface LoginService {
     LoginDto2 login(LoginDto loginDto);
     LogoutDto logout();
     List<UserDto> getUsers();
-    Integer getAuth(String userId);
+    UserDto getUser(String token);
 }

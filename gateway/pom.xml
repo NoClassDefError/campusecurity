@@ -13,15 +13,25 @@
     <description>网关</description>
     <packaging>jar</packaging>
     <dependencies>
-        <!--注意spring cloud gateway与spring mvc依赖有冲突，不能并存-->
+        <!--
+        spring cloud gateway与spring mvc依赖有冲突，不能并存
+        辣鸡spring cloud gateway!各种出问题，不仅用不了web，feign和thymeleaf基于web就也不能用。
+        自主实现过滤即可
+        -->
         <dependency>
             <groupId>cn.macswelle.campusecurity</groupId>
             <artifactId>common</artifactId>
             <version>1.0</version>
         </dependency>
+        <!--thymeleaf模板引擎，无需再引入web模块-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.macswelle.campusecurity</groupId>
+            <artifactId>feign-api</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 

@@ -10,3 +10,4 @@ public class LoginDto2 {
     String description;
     Integer auth;
 }
+

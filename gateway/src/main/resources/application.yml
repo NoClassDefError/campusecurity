@@ -4,24 +4,6 @@ server:
 spring:
   application:
     name: gateway-server
-  cloud:
-    gateway:
-      #配置自动的根据微服务名称进行路由转发
-      discovery:
-        locator:
-          enabled: true #开启根据微服务名称自动转发
-          lowerCaseServiceId: true #微服务名称以小写呈现
-      routes:
-        # user service
-        - id: userservice
-          uri: lb://userservice # lb 是load balance，代表从注册中心获取服务，是面向服务的动态路由
-          predicates:
-            - Path=/user/**
-         # device manage
-        - id: devicemanage
-          uri: lb://devicemanage
-          predicates:
-            - Path=/device/**
 
 eureka:
   client:

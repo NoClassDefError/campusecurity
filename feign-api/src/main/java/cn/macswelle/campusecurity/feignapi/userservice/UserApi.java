@@ -10,20 +10,22 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @FeignClient(value = "userservice", path = "/user")
 public interface UserApi {
 
-    @RequestMapping(name = "/getAuth",method = RequestMethod.POST)
-    Integer getAuth(String userId);
+    @RequestMapping(name = "/getUser", method = RequestMethod.POST)
+    UserDto getUser(String token);
 
     @RequestMapping(name = "/login", method = RequestMethod.POST)
-    LoginDto2 login(LoginDto loginDto, HttpServletResponse response);
+    LoginDto2 login(LoginDto loginDto);
 
     @RequestMapping(name = "/logout", method = RequestMethod.POST)
-    LogoutDto logoutDto(HttpServletResponse response);
+    LogoutDto logoutDto();
+
+    @RequestMapping(name = "/changeDescription", method = RequestMethod.POST)
+    LoginDto2 changeDescription(String d);
 
     @RequestMapping(name = "/changePassword", method = RequestMethod.POST)
     HttpResult changePassword(String original, String newPassword);
