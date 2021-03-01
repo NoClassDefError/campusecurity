@@ -19,9 +19,9 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-    generate-ddl: true
+      ddl-auto: update
+    show-sql: false
+    generate-ddl: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
