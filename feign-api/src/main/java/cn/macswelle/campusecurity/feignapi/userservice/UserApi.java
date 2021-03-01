@@ -7,6 +7,7 @@ import cn.macswelle.campusecurity.common.dto.responseDto.LoginDto2;
 import cn.macswelle.campusecurity.common.dto.responseDto.LogoutDto;
 import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,29 +17,29 @@ import java.util.List;
 @FeignClient(value = "userservice", path = "/user")
 public interface UserApi {
 
-    @RequestMapping(name = "/getUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/getUser", method = RequestMethod.POST)
     UserDto getUser(String token);
 
-    @RequestMapping(name = "/login", method = RequestMethod.POST)
-    LoginDto2 login(LoginDto loginDto);
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    LoginDto2 login(@RequestBody LoginDto loginDto);
 
-    @RequestMapping(name = "/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
     LogoutDto logoutDto();
 
-    @RequestMapping(name = "/changeDescription", method = RequestMethod.POST)
+    @RequestMapping(value = "/changeDescription", method = RequestMethod.POST)
     LoginDto2 changeDescription(String d);
 
-    @RequestMapping(name = "/changePassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     HttpResult changePassword(@RequestParam("original") String original,
                               @RequestParam("newPassword") String newPassword);
 
-    @RequestMapping(name = "/admin/signUp", method = RequestMethod.POST)
-    HttpResult signUp(SignUpDto signUpDto);
+    @RequestMapping(value = "/admin/signUp", method = RequestMethod.POST)
+    HttpResult signUp(@RequestParam("signUpDto") SignUpDto signUpDto);
 
-    @RequestMapping(name = "/admin/remove", method = RequestMethod.POST)
-    HttpResult remove(String id);
+    @RequestMapping(value = "/admin/remove", method = RequestMethod.POST)
+    HttpResult remove(@RequestParam("id") String id);
 
-    @RequestMapping(name = "/admin/getUsers", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/getUsers", method = RequestMethod.POST)
     List<UserDto> getUsers();
 
 }

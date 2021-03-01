@@ -6,6 +6,7 @@ import cn.macswelle.campusecurity.common.dto.requestDto.RecordDto;
 import cn.macswelle.campusecurity.common.dto.responseDto.RecordDto2;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +28,7 @@ public interface ManagerApi {
     ArrayList<DeviceDto> refreshServices();
 
     @RequestMapping(value = "/changeLocation", method = RequestMethod.POST)
-    String refractorOrAddLocation(LocationDto2 locationDto);
+    String refractorOrAddLocation(@RequestBody LocationDto2 locationDto);
 
     @RequestMapping(value = "/getLocations", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<LocationDto2> getLocations();
@@ -41,5 +42,5 @@ public interface ManagerApi {
                                 @RequestParam("end") Long end);
 
     @RequestMapping(value = "/addRecord", method = RequestMethod.POST)
-    void addRecord(RecordDto dto);
+    void addRecord(@RequestBody RecordDto dto);
 }

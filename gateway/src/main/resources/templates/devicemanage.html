@@ -9,10 +9,12 @@
 <script src="../static/js/plugins.js"></script>
 <script src="../static/js/devicemanage.js"></script>
 <div>
-    <h1>校园安防系统</h1>
+    <img th:src="@{img/title.png}" alt="标题图片">
+    <h1>校园智能安防系统</h1>
 </div>
 <div>
     <div>
+        <h2>用户信息</h2>
         <div>
             <ul>
                 <li>用户名 <span th:text="${user.getName()}"></span></li>
@@ -24,39 +26,54 @@
         <div>
             <form action="/changeDescription">
                 <p><input name="d" type="text"></p>
-                <input type="submit" name="修改描述">
+                <input type="submit" value="修改个人描述">
             </form>
         </div>
         <div>
             <form action="/changePassword">
                 <p>旧密码<input name="origin" type="password"></p>
                 <p>新密码<input name="newP" type="password"></p>
-                <input type="submit" name="修改密码">
+                <input type="submit" value="修改密码">
             </form>
         </div>
         <div id="message" th:if="${not #strings.isEmpty(status)}" th:text="${status}"></div>
     </div>
     <div>
+        <h2>设备管理</h2>
+        <form action="/refreshLocation"><input type="submit" value="刷新列表"></form>
         <div>
-            <form action="/addLocation">
-                <p>旧密码<input name="origin" type="password"></p>
-                <p>新密码<input name="newP" type="password"></p>
-                <input type="submit" name="修改密码">
+            <p>添加或修改地点</p>
+            <form action="/changeLocation" method="post">
+                <p>地点id<input name="id" type="text"></p>
+                <p>地点名称<input name="name" type="text"></p>
+                <p>描述<input name="des" type="text"></p>
+                <input type="submit" value="添加">
             </form>
         </div>
         <div>
+            <p>地点列表</p>
             <table>
                 <tr>
                     <th>ID</th>
                     <th>地点</th>
                     <th>描述</th>
                     <th>正在运行的设备数</th>
+                    <th>事件日志</th>
                 </tr>
                 <tr th:each="location:${#servletContext.getAttribute('locations')}">
                     <td th:text="${location.getId()}"></td>
                     <td th:text="${location.getName()}"></td>
                     <td th:text="${location.getDescription()}"></td>
-                    <td th:text="${location.getNumbers}"></td>
+                    <td th:text="${location.getDeviceNum()}"></td>
+                    <td th:text="${location.getRecord()}"></td>
+                    <td>
+                        <form action="/getLocation" method="post">
+                            <input type="hidden" name="id" th:value="${location.getId()}">
+                            <input type="hidden" name="name" th:value="${location.getName()}">
+                            <input type="hidden" name="description" th:value="${location.getDescription()}">
+                            <input type="submit" value="详情">
+                        </form>
+                    </td>
                 </tr>
             </table>
         </div>

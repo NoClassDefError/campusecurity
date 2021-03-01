@@ -2,11 +2,15 @@ package cn.macswelle.campusecurity.gateway.controller;
 
 import cn.macswelle.campusecurity.common.dto.requestDto.LoginDto;
 import cn.macswelle.campusecurity.common.dto.responseDto.LoginDto2;
+import cn.macswelle.campusecurity.feignapi.deviceManager.ManagerApi;
 import cn.macswelle.campusecurity.feignapi.userservice.UserApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +21,9 @@ public class IndexController {
     private UserApi userApi;
 
     @Autowired
+    private ManagerApi managerApi;
+
+    @Autowired
     private HttpSession session;
 
     @RequestMapping("/")
@@ -25,10 +32,15 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(LoginDto loginDto) {
+    public ModelAndView login(@RequestParam("userId") String username,
+                              @RequestParam("password") String password) {
         ModelAndView modelAndView = new ModelAndView();
+        LoginDto loginDto = new LoginDto();
+        loginDto.setUserId(username);
+        loginDto.setPassword(password);
         LoginDto2 loginDto2 = userApi.login(loginDto);
-        System.out.println(loginDto2);
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("登录：" + loginDto2);
         if (loginDto2.getStatus().equals("success")) {
             modelAndView.setViewName("devicemanage");
             modelAndView.addObject("user", loginDto2);

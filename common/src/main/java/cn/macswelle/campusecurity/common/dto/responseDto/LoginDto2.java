@@ -8,6 +8,6 @@ public class LoginDto2 {
     String status;
     String name;
     String description;
-    Integer auth;
+    String auth;
 }
 

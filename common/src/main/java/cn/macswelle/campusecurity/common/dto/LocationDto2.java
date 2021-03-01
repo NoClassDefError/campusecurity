@@ -8,4 +8,5 @@ public class LocationDto2 {
     private String name;
     private String description;
     private int deviceNum;
+    private int record;
 }

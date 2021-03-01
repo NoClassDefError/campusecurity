@@ -17,9 +17,9 @@
 
   <div>
     <form action="/login" method="post">
-      <p>用户名：<input type="text" name="username"></p>
+      <p>用户ID：<input type="text" name="userId"></p>
       <p>密码：<input type="password" name="password"></p>
-      <input type="submit" name="登录">
+      <input type="submit" value="登录">
     </form>
     <div id="message" th:if="${not #strings.isEmpty(status)}" th:text="${status}"></div>
   </div>

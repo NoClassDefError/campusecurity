@@ -33,16 +33,27 @@ public class UserServiceImpl implements LoginService, SignUpService {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         //对象转换
         LoginDto2 loginDto2 = new LoginDto2();
-        List<User> result = userRepository.findByNameAndPassword(dto.getUsername(), dto.getPassword());
+        List<User> result = userRepository.findByIdAndPassword(dto.getUserId(), dto.getPassword());
         if (result != null && result.size() == 1) {
             loginDto2.setStatus("success");
-            String token = JwtUtil.generateToken(result.get(0).getId(), "gehanchen");
-            loginDto2.setAuth(result.get(0).getAuth());
+//            String token = JwtUtil.generateToken(result.get(0).getId(), "gehanchen");
+//            loginDto2.setAuth(result.get(0).getAuth());
+            switch (result.get(0).getAuth()) {
+                case 0:
+                    loginDto2.setAuth("超级管理员");
+                    break;
+                case 1:
+                    loginDto2.setAuth("管理员");
+                    break;
+                case 2:
+                    loginDto2.setAuth("只读");
+                    break;
+            }
             loginDto2.setDescription(result.get(0).getDescription());
             loginDto2.setId(result.get(0).getId());
             loginDto2.setName(result.get(0).getName());
             //记录登录状态，不能像单体应用那样，微服务架构存在session同步问题，要将session存在redis中
-            logger.info("access-token: " + token);
+//            logger.info("access-token: " + token);
             logger.info("登录: " + result.toString());
             session.setAttribute("User", result);
         } else {

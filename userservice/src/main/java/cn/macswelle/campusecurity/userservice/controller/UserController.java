@@ -12,10 +12,7 @@ import cn.macswelle.campusecurity.userservice.service.SignUpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -38,7 +35,7 @@ public class UserController implements UserApi {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public LoginDto2 login(LoginDto loginDto) {
+    public LoginDto2 login(@RequestBody LoginDto loginDto) {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         LoginDto2 result = loginService.login(loginDto);
         logger.info(result.toString());
@@ -67,7 +64,7 @@ public class UserController implements UserApi {
 
     @RequestMapping(value = "/admin/signUp", method = RequestMethod.POST)
     @ResponseBody
-    public HttpResult signUp(SignUpDto signUpDto) {
+    public HttpResult signUp(@RequestBody SignUpDto signUpDto) {
         return signUpService.signUp(signUpDto);
     }
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${location.getName()}"></title>
+</head>
+<body>
+<div>
+    <img th:src="@{img/title.png}" alt="标题图片">
+    <h1>校园智能安防系统</h1>
+</div>
+<div>
+    <h2>正在运行的设备与上位机</h2>
+    <table>
+        <tr>
+            <th>设备ID</th>
+            <th>名称</th>
+            <th>类型</th>
+            <th>描述</th>
+            <th>url</th>
+            <th>适配软件版本</th>
+        </tr>
+        <tr>
+
+        </tr>
+    </table>
+</div>
+<div>
+    <h2>此地过去一天监测到的事件</h2>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>时间</th>
+            <th>事件描述</th>
+            <th>文件记录url</th>
+            <th>人物id</th>
+            <th>人物名称</th>
+        </tr>
+    </table>
+    查询时间段
+    <form action=""></form>
+</div>
+</body>
+</html>
