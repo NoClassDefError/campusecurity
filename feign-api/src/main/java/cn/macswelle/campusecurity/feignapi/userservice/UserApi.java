@@ -9,6 +9,7 @@ import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -28,7 +29,8 @@ public interface UserApi {
     LoginDto2 changeDescription(String d);
 
     @RequestMapping(name = "/changePassword", method = RequestMethod.POST)
-    HttpResult changePassword(String original, String newPassword);
+    HttpResult changePassword(@RequestParam("original") String original,
+                              @RequestParam("newPassword") String newPassword);
 
     @RequestMapping(name = "/admin/signUp", method = RequestMethod.POST)
     HttpResult signUp(SignUpDto signUpDto);

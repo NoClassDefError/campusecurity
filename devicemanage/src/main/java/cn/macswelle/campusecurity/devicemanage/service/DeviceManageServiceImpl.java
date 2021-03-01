@@ -155,6 +155,7 @@ public class DeviceManageServiceImpl implements DeviceManageService {
             locationDto2.setId(location.getId());
             locationDto2.setDescription(location.getDescription());
             locationDto2.setName(location.getName());
+            locationDto2.setDeviceNum(deviceRepository.findNumByLocation(location.getId()));
             list.add(locationDto2);
         });
         return list;

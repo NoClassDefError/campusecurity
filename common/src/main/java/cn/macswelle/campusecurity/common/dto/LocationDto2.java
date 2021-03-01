@@ -7,4 +7,5 @@ public class LocationDto2 {
     private String id;
     private String name;
     private String description;
+    private int deviceNum;
 }

@@ -17,9 +17,9 @@
         redis  localhost:6379
     注册发现中心 eureka  localhost:8761/eureka
     配置中心 configserver localhost:8888
-    网关 geteway localhost:8081
     用户服务 userservice http://localhost:8762 或  lb://userservice
     设备管理服务 devicemanage http://localhost:8763 或 lb://devicemanage
+    网关兼前端 geteway http://localhost:8889
     设备通信服务:
         NVR(摄像头的上位机)适配与通信服务 nvrlistener http://localhost:8764 
         烟雾报警器(独立硬件)适配与通信服务 tcpadapter http://localhost:8765

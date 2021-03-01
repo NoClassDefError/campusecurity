@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * eureka向设备管理中心发送信息的api
  */
-@FeignClient(value = "deviceManager-eureka", path = "/device")
+@FeignClient(value = "devicemanage", path = "/device")
 public interface EurekaApi {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     void instanceRegister(DeviceDto deviceDto);

@@ -33,14 +33,14 @@ public class UserServiceImpl implements LoginService, SignUpService {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         //对象转换
         LoginDto2 loginDto2 = new LoginDto2();
-        User result = userRepository.findByNameAndPassword(dto.getUsername(), dto.getPassword()).get(0);
-        if (result != null) {
+        List<User> result = userRepository.findByNameAndPassword(dto.getUsername(), dto.getPassword());
+        if (result != null && result.size() == 1) {
             loginDto2.setStatus("success");
-            String token = JwtUtil.generateToken(result.getId(), "gehanchen");
-            loginDto2.setAuth(result.getAuth());
-            loginDto2.setDescription(result.getDescription());
-            loginDto2.setId(result.getId());
-            loginDto2.setName(result.getName());
+            String token = JwtUtil.generateToken(result.get(0).getId(), "gehanchen");
+            loginDto2.setAuth(result.get(0).getAuth());
+            loginDto2.setDescription(result.get(0).getDescription());
+            loginDto2.setId(result.get(0).getId());
+            loginDto2.setName(result.get(0).getName());
             //记录登录状态，不能像单体应用那样，微服务架构存在session同步问题，要将session存在redis中
             logger.info("access-token: " + token);
             logger.info("登录: " + result.toString());
@@ -76,10 +76,16 @@ public class UserServiceImpl implements LoginService, SignUpService {
         String uerId = JwtUtil.getUserInfo(token);
         User user = userRepository.findById(uerId).orElse(null);
         UserDto userDto = new UserDto();
-        switch (user.getAuth()){
-            case 0:userDto.setAuth("超级管理员");break;
-            case 1:userDto.setAuth("管理员");break;
-            case 2:userDto.setAuth("只读");break;
+        switch (user.getAuth()) {
+            case 0:
+                userDto.setAuth("超级管理员");
+                break;
+            case 1:
+                userDto.setAuth("管理员");
+                break;
+            case 2:
+                userDto.setAuth("只读");
+                break;
         }
         userDto.setDescription(user.getDescription());
         userDto.setId(user.getId());

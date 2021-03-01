@@ -1,20 +1,13 @@
 package cn.macswelle.campusecurity.gateway.filter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
 
 @Component
-public class LogFilter implements GlobalFilter, Ordered {
+public class LogFilter{
     /**
      * 过滤器业务逻辑
      * ServerWebExchange相当于请求与响应的上下文，RequestContext
-     */
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -28,4 +21,5 @@ public class LogFilter implements GlobalFilter, Ordered {
     public int getOrder() {
         return 0;
     }
+     */
 }

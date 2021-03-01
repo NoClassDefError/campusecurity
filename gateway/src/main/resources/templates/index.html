@@ -11,12 +11,12 @@
 
 <body>
   <div>
-    <img src="../static/img/title.png" alt="标题">
+    <img th:src="@{img/title.png}" alt="标题图片">
     <h1>校园智能安防系统</h1>
   </div>
 
   <div>
-    <form action="/login">
+    <form action="/login" method="post">
       <p>用户名：<input type="text" name="username"></p>
       <p>密码：<input type="password" name="password"></p>
       <input type="submit" name="登录">
