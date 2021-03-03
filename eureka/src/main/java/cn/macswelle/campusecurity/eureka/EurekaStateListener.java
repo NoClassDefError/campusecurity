@@ -1,5 +1,6 @@
 package cn.macswelle.campusecurity.eureka;
 
+import cn.macswelle.campusecurity.common.dto.DeviceDto;
 import cn.macswelle.campusecurity.feignapi.adapter.AdapterApi;
 import cn.macswelle.campusecurity.feignapi.deviceManager.EurekaApi;
 import com.netflix.appinfo.InstanceInfo;
@@ -41,8 +42,10 @@ public class EurekaStateListener {
         String url = event.getInstanceInfo().getHomePageUrl();
         AdapterApi adapterClient = Feign.builder().target(AdapterApi.class, url);
         if (adapterClient != null) {
-            logger.info("获得硬件信息：" + adapterClient.getInfo() + "已发送至设备管理中心");
-            eurekaApi.instanceRegister(adapterClient.getInfo());
+            DeviceDto info = adapterClient.getInfo();
+            logger.info("获得硬件信息：" + info + "已发送至设备管理中心");
+            if (info != null)
+                eurekaApi.instanceRegister(info);
         }
     }
 }
