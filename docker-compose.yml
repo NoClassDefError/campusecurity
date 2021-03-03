@@ -1,0 +1,102 @@
+services:
+  mysql:
+    build:
+      context: ./dependencies/mysql/
+      dockerfile: ./Dockerfile
+    image: campusecurity/mysql:1.0
+    restart: always
+    ports:
+      - 3306:3306
+    container_name: mysql
+    hostname: mysql
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - campusecurityNet
+  eureka-server:
+    build:
+      context: ./eureka/
+      dockerfile: ./Dockerfile
+    image: campusecurity/eureka-server:1.0
+    restart: always
+    container_name: eureka-server
+    hostname: eureka-server
+    volumes:
+      - logs:/eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - campusecurityNet
+  configserver:
+    build:
+      context: ./eureka/
+      dockerfile: ./Dockerfile
+    image: campusecurity/configserver:1.0
+    restart: always
+    container_name: configserver
+    hostname: configserver
+    volumes:
+      - logs:/configserver
+    ports:
+      - "8888:8888"
+    networks:
+      - campusecurityNet
+  userservice:
+    build:
+      context: ./userservice/
+      dockerfile: ./Dockerfile
+    image: campusecurity/userservice:1.0
+    restart: always
+    container_name: userservice
+    hostname: userservice
+    volumes:
+      - logs:/userserice
+    ports:
+      - "8762:8762"
+    networks:
+      - campusecurityNet
+    depends_on:
+      - eureka-server
+      - mysql
+  devicemanage:
+    build:
+      context: ./devicemanage/
+      dockerfile: ./Dockerfile
+    image: campusecurity/devicemanage:1.0
+    restart: always
+    container_name: devicemanage
+    hostname: devicemanage
+    volumes:
+      - logs:/devicemanage/logs
+      - files:/devicemanage/files
+    ports:
+      - "8763:8763"
+    networks:
+      - campusecurityNet
+    depends_on:
+      - eureka-server
+      - mysql
+  gateway:
+    build:
+      context: ./gateway/
+      dockerfile: ./Dockerfile
+    image: campusecurity/gateway:1.0
+    restart: always
+    ports:
+      - "8889:8889"
+    container_name: gateway
+    hostname: gateway
+    volumes:
+      - logs:/gateway
+    networks:
+      - campusecurityNet
+    depends_on:
+      - eureka-server
+      - devicemanage
+networks:
+  campusecurityNet:
+    driver: 'bridge'
+volumes:
+  logs:
+  files:
+  mysql:

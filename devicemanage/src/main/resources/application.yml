@@ -1,7 +1,13 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka-server:8761/eureka/
+    fetchRegistry: true
+    registry-fetch-interval-seconds: 8
+  instance:
+    prefer-ip-address: true #使用ip地址注册
+    lease-renewal-interval-in-seconds: 4
+    lease-expiration-duration-in-seconds: 12
 server:
   port: 8763
 spring:
@@ -11,9 +17,9 @@ spring:
     config:
       label: master
       profile: dev
-      uri: http://localhost:8888
+      uri: http://configserver:8888
   datasource:
-    url: jdbc:mysql://localhost:3306/campusecurity?serverTimezone=GMT&useSSL=false
+    url: jdbc:mysql://mysql:3306/campusecurity?serverTimezone=GMT&useSSL=false
     username: root
     password: Gehanchen260817
     driver-class-name: com.mysql.jdbc.Driver

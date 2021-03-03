@@ -2,9 +2,13 @@ server:
   port: 8761
 eureka:
   instance:
-    hostname: localhost
+    hostname: eureka-server
   client:
     registerWithEureka: false
-    fetchRegistry: false
+    fetchRegistry: true
+    registry-fetch-interval-seconds: 8
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:  #配置属性，但由于 Eureka 自我保护模式以及心跳周期长的原因，经常会遇到 Eureka Server 不剔除已关停的节点的问题
+    enable-self-preservation: false # 设为false，关闭自我保护
+    eviction-interval-timer-in-ms: 5000 # 清理间隔（单位毫秒，默认是60*1000）启用主动失效，并且每次主动失效检测间隔为3s
