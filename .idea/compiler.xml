@@ -16,6 +16,7 @@
         <module name="devicemanage" />
         <module name="configserver" />
         <module name="gateway" />
+        <module name="gateway2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,6 +25,7 @@
       <module name="dataprocess" target="1.8" />
       <module name="drivers" target="1.8" />
       <module name="feignApi" target="1.8" />
+      <module name="gateway (1)" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -40,6 +42,8 @@
       <module name="feign-api" options="-parameters" />
       <module name="feignApi" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="gateway (1)" options="-parameters" />
+      <module name="gateway2" options="-parameters" />
       <module name="nvrlistener" options="-parameters" />
       <module name="tcpadapter" options="-parameters" />
       <module name="userservice" options="-parameters" />

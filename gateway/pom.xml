@@ -10,7 +10,7 @@
     <groupId>cn.macswelle.campusecurity</groupId>
     <artifactId>gateway</artifactId>
 
-    <description>网关</description>
+    <description>基于模板的网关</description>
     <packaging>jar</packaging>
     <dependencies>
         <!--

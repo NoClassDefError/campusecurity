@@ -56,6 +56,10 @@ public class EurekaStateListener {
                 " instanceId: " + instanceInfo.getId();
         logger.info(msg);
         String url = event.getInstanceInfo().getHomePageUrl();
+        if (instanceInfo.getAppName().equalsIgnoreCase("gateway-server-v2")) {
+            logger.info("分离版网关请求注册，考虑到他不能用web通信，于是不发送获取信息的请求。");
+            return;
+        }
         AdapterApi adapterClient = Feign.builder()
                 .decoder(new ResponseEntityDecoder(new SpringDecoder(messageConverters)))
                 .target(AdapterApi.class, url);

@@ -4,7 +4,7 @@ import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TokenServiceImpl implements TokenService{
+public class TokenServiceImpl implements TokenService {
 
 
     @Override

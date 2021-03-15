@@ -10,13 +10,13 @@
         <option value="$PROJECT_DIR$/userservice/pom.xml" />
         <option value="$PROJECT_DIR$/center/pom.xml" />
         <option value="$PROJECT_DIR$/eureka/pom.xml" />
-        <option value="$PROJECT_DIR$/gateway/pom.xml" />
         <option value="$PROJECT_DIR$/devicemanage/pom.xml" />
         <option value="$PROJECT_DIR$/drivers/pom.xml" />
         <option value="$PROJECT_DIR$/common/pom.xml" />
         <option value="$PROJECT_DIR$/config/pom.xml" />
         <option value="$PROJECT_DIR$/nvrlistener/pom.xml" />
         <option value="$PROJECT_DIR$/tcpadapter/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway2/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

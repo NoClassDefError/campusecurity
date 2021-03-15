@@ -1,0 +1,37 @@
+server:
+  port: 8889
+
+spring:
+  application:
+    name: gateway-server-v2
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+      # user service
+      - id: userservice
+        uri: lb://userservice
+        predicates:
+          - Path=/user/**
+      # device manage
+      - id: devicemanage
+          uri: lb://devicemanage
+          predicates:
+            - Path=/device/**
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#    fetchRegistry: true
+#    registry-fetch-interval-seconds: 8
+#  instance:
+#    prefer-ip-address: true #使用ip地址注册
+#    lease-renewal-interval-in-seconds: 4
+#    lease-expiration-duration-in-seconds: 12
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
