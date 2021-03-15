@@ -1,8 +1,8 @@
 package cn.macswelle.campusecurity.userservice.controller;
 
+import cn.macswelle.campusecurity.common.dto.requestDto.LoginDto;
 import cn.macswelle.campusecurity.common.dto.requestDto.SignUpDto;
 import cn.macswelle.campusecurity.common.dto.responseDto.HttpResult;
-import cn.macswelle.campusecurity.common.dto.requestDto.LoginDto;
 import cn.macswelle.campusecurity.common.dto.responseDto.LoginDto2;
 import cn.macswelle.campusecurity.common.dto.responseDto.LogoutDto;
 import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
