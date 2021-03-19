@@ -18,9 +18,9 @@ spring:
           - Path=/user/**
       # device manage
       - id: devicemanage
-          uri: lb://devicemanage
-          predicates:
-            - Path=/device/**
+        uri: lb://devicemanage
+        predicates:
+          - Path=/device/**
 #eureka:
 #  client:
 #    service-url:

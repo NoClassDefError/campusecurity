@@ -21,7 +21,7 @@ public interface UserApi {
     UserDto getUser(String token);
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    LoginDto2 login(@RequestBody LoginDto loginDto);
+    LoginDto2 login(LoginDto loginDto);
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     LogoutDto logoutDto();

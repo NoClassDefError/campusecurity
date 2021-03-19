@@ -20,11 +20,13 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="campusecurity" target="1.8" />
       <module name="center" target="1.8" />
       <module name="commons" target="1.5" />
       <module name="dataprocess" target="1.8" />
       <module name="drivers" target="1.8" />
       <module name="feignApi" target="1.8" />
+      <module name="frontend" target="1.8" />
       <module name="gateway (1)" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -41,6 +43,7 @@
       <module name="eureka" options="-parameters" />
       <module name="feign-api" options="-parameters" />
       <module name="feignApi" options="-parameters" />
+      <module name="frontend" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="gateway (1)" options="-parameters" />
       <module name="gateway2" options="-parameters" />

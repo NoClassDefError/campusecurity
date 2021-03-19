@@ -28,7 +28,7 @@ public interface ManagerApi {
     ArrayList<DeviceDto> refreshServices();
 
     @RequestMapping(value = "/changeLocation", method = RequestMethod.POST)
-    String refractorOrAddLocation(@RequestBody LocationDto2 locationDto);
+    String refractorOrAddLocation(LocationDto2 locationDto);
 
     @RequestMapping(value = "/getLocations", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<LocationDto2> getLocations();

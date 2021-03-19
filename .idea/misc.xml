@@ -17,12 +17,14 @@
         <option value="$PROJECT_DIR$/nvrlistener/pom.xml" />
         <option value="$PROJECT_DIR$/tcpadapter/pom.xml" />
         <option value="$PROJECT_DIR$/gateway2/pom.xml" />
+        <option value="$PROJECT_DIR$/frontend/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/commons/pom.xml" />
         <option value="$PROJECT_DIR$/feignApi/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </set>
     </option>
   </component>
