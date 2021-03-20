@@ -1,7 +1,7 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
     fetchRegistry: true
     registry-fetch-interval-seconds: 8
   instance:
@@ -17,7 +17,7 @@ spring:
     config:
       label: master
       profile: dev
-      uri: http://configserver:8888
+      uri: http://localhost:8888
   datasource:
     url: jdbc:mysql://localhost:3306/campusecurity?serverTimezone=GMT&useSSL=false
     username: root
