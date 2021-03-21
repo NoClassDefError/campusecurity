@@ -3,6 +3,7 @@ package cn.macswelle.campusecurity.devicemanage.controller;
 import cn.macswelle.campusecurity.common.dto.DeviceDto;
 import cn.macswelle.campusecurity.common.dto.LocationDto2;
 import cn.macswelle.campusecurity.common.dto.requestDto.RecordDto;
+import cn.macswelle.campusecurity.common.dto.responseDto.HttpResult;
 import cn.macswelle.campusecurity.common.dto.responseDto.RecordDto2;
 import cn.macswelle.campusecurity.devicemanage.service.DeviceManageService;
 import cn.macswelle.campusecurity.feignapi.deviceManager.ManagerApi;
@@ -36,10 +37,10 @@ public class DeviceManageController implements ManagerApi {
         return deviceManageService.refreshServices();
     }
 
-    @RequestMapping(value = "/changeLocation", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/changeLocation", method = RequestMethod.POST)
     @ResponseBody
     @Override
-    public String refractorOrAddLocation(LocationDto2 locationDto) {
+    public HttpResult refractorOrAddLocation(LocationDto2 locationDto) {
         return deviceManageService.refractorOrAddLocation(locationDto);
     }
 
@@ -64,7 +65,7 @@ public class DeviceManageController implements ManagerApi {
         return deviceManageService.getRecords(locationId, start, end);
     }
 
-    @RequestMapping(value = "/addRecord", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/addRecord", method = RequestMethod.POST)
     @Override
     public void addRecord(RecordDto dto) {
         deviceManageService.addRecord(dto);

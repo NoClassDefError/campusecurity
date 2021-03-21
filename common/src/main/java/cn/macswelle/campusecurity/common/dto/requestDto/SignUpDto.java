@@ -6,6 +6,6 @@ import lombok.Data;
 public class SignUpDto {
     String name;
     String description;
-    Integer auth;//限定为1或2
-
+    Integer auth;//限定为0,1或2
+    String id;
 }

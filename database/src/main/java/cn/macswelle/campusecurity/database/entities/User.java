@@ -25,7 +25,7 @@ public class User {
     private String password;
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description",columnDefinition = "varchar(255) default '123456'")
     private String description;
 
     /**

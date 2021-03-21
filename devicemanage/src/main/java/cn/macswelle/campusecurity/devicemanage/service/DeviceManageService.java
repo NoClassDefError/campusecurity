@@ -3,6 +3,7 @@ package cn.macswelle.campusecurity.devicemanage.service;
 import cn.macswelle.campusecurity.common.dto.DeviceDto;
 import cn.macswelle.campusecurity.common.dto.LocationDto2;
 import cn.macswelle.campusecurity.common.dto.requestDto.RecordDto;
+import cn.macswelle.campusecurity.common.dto.responseDto.HttpResult;
 import cn.macswelle.campusecurity.common.dto.responseDto.RecordDto2;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public interface DeviceManageService {
     /**
      * 由于存在级联问题，location不能删除，只能修改基本信息
      */
-    String refractorOrAddLocation(LocationDto2 locationDto);
+    HttpResult refractorOrAddLocation(LocationDto2 locationDto);
 
     List<LocationDto2> getLocations();
 

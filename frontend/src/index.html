@@ -19,15 +19,26 @@
   <h1>校园智能安防系统</h1>
 </div>
 
-<div>
-  用户ID：
-  <div><input id="userId" type="text" name="userId"></div>
-  密码：
-  <div><input id="password" type="password" name="password"></div>
-  <div>
-    <button type="button" onclick="login()">登录</button>
+<div class="layui-form">
+  <div class="layui-form-item">
+    <label for="userId" class="layui-form-label">用户ID：</label>
+    <div class="layui-input-block">
+      <input id="userId" type="text" name="userId" class="layui-input">
+    </div>
   </div>
-  <div id="message" ></div>
+  <div class="layui-form-item">
+    <label for="password" class="layui-form-label">密码：</label>
+    <div class="layui-input-block">
+      <input id="password" type="password" name="password" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" onclick="login()">登录</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+  <div id="message"></div>
 </div>
 
 </body>

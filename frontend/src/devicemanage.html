@@ -18,55 +18,148 @@
 <div>
   <h1>校园智能安防系统</h1>
 </div>
+
 <div>
+  <h2>个人信息</h2>
   <div>
-    <h2>用户信息</h2>
-    <div>
-      <ul>
-        <li>用户名 <span id="username"></span></li>
-        <li>ID <span id="userId"></span></li>
-        <li>权限 <span id="userAuth"></span></li>
-        <li>描述 <span id="userDes"></span></li>
-      </ul>
+    <ul>
+      <li>用户名 <span id="username"></span></li>
+      <li>ID <span id="userId"></span></li>
+      <li>权限 <span id="userAuth"></span></li>
+      <li>描述 <span id="userDes"></span></li>
+    </ul>
+  </div>
+
+  <div class="layui-form">
+    <div class="layui-form-item">
+      <label class="layui-form-label" for="changeDes">修改描述</label>
+      <div class="layui-input-block">
+        <input id="changeDes" name="d" type="text" placeholder="请输入" autocomplete="off" class="layui-input">
+      </div>
     </div>
-    <div>
-      <input id="changeDes" name="d" type="text">
-      <button onclick="changeDescription()">修改描述</button>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" onclick="changeDescription()">修改</button>
+      </div>
     </div>
-    <div>
-      <p>旧密码<input id="origin" type="password"></p>
-      <p>新密码<input id="newP" type="password"></p>
-      <button onclick="changePassword()">修改密码</button>
+  </div>
+
+  <div class="layui-form">
+    <div class="layui-form-item">
+      <label class="layui-form-label" for="origin">旧密码</label>
+      <div class="layui-input-block">
+        <input id="origin" type="password" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label" for="newP">新密码</label>
+      <div class="layui-input-block">
+        <input id="newP" type="password" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" onclick="changePassword()">修改密码</button>
+      </div>
     </div>
     <div id="message"></div>
   </div>
-  <div>
-    <h2>设备管理</h2>
-    <div>
-      <p>地点列表 双击列表查看地点具体信息</p>
-      <table id="locations" lay-filter="test"></table>
-      <div id="tableMessage"></div>
-      <p>地点名称<input id="name" type="text"></p>
-      <p>描述<input id="des" type="text"></p>
-      <button type="button" onclick="addLocation()">添加地点</button>
-    </div>
-    <div>
-      <h2>地点 <span id="current-location"> </span></h2>
-      <div>
-        <p>设备列表</p>
-        <table id="devices" lay-filter="devices"></table>
-        <div id="tableMessage2"></div>
+</div>
+
+<div id="user-manage">
+  <h2>用户管理</h2>
+  可以直接在表格里修改用户信息
+  <table id="users" lay-filter="users" lay-data="{id:'users'}"></table>
+  <div id="message4"></div>
+  <div class="layui-form">
+    注册新用户
+    <div class="layui-form-item">
+      <label class="layui-form-label" for="user-name">名称</label>
+      <div class="layui-input-block">
+        <input id="user-name" type="text" autocomplete="off" class="layui-input">
       </div>
-      <div>
-        <p>该地点事件记录 输入时间段查询，留空则查询最近100条</p>
-        <p> 开始时间<input type="text" class="layui-input" id="start">
-          至<input type="text" class="layui-input" id="end"></p>
-        <table id="records" lay-filter="records"></table>
-        <button type="button" onclick="getRecords()">查询</button>
-        <div id="tableMessage3"></div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label" for="user-auth">权限</label>
+      <div class="layui-input-block">
+        <input id="user-auth" type="text" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label" for="user-description">描述</label>
+      <div class="layui-input-block">
+        <input id="user-description" type="text" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" onclick="addUser()">注册</button>
       </div>
     </div>
   </div>
 </div>
+
+<div>
+  <h2>设备管理</h2>
+  <div>
+    <p>地点列表 双击列表元素，即可查看地点具体信息</p>
+    <table id="locations" lay-filter="test" lay-data="{id:'locations'}"></table>
+
+    <div class="layui-form" id="location-form">
+      <div class="layui-form-item">
+        <label class="layui-form-label" for="name">地点名称</label>
+        <div class="layui-input-block">
+          <input id="name" type="text" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label" for="des">位置</label>
+        <div class="layui-input-block">
+          <input id="des" type="text" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item" id="add-location">
+        <div class="layui-input-block">
+          <button class="layui-btn" onclick="addLocation()">添加地点</button>
+        </div>
+      </div>
+    </div>
+    <div id="tableMessage"></div>
+  </div>
+  <div id="location-panel">
+    <h2>地点 <span id="current-location"> </span></h2>
+    <div>
+      <p>设备列表</p>
+      <table id="devices" lay-filter="devices"></table>
+      <div id="tableMessage2"></div>
+    </div>
+    <div>
+      <p>该地点事件记录 输入时间段查询，留空则查询最近100条</p>
+      <div class="layui-form" id="record-form">
+        <div class="layui-form-item">
+          <label class="layui-form-label" for="start">从</label>
+          <div class="layui-input-block">
+            <input id="start" type="text" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label" for="end">至</label>
+          <div class="layui-input-block">
+            <input id="end" type="text" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <button class="layui-btn" onclick="getRecords()">查询</button>
+          </div>
+        </div>
+        <div id="tableMessage3"></div>
+      </div>
+      <table id="records" lay-filter="records"></table>
+    </div>
+  </div>
+</div>
+
+
 </body>
 </html>
