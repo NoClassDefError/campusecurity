@@ -1,5 +1,6 @@
 package cn.macswelle.campusecurity.userservice.service;
 
+import cn.hutool.json.JSONObject;
 import cn.macswelle.campusecurity.common.dto.responseDto.HttpResult;
 import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
 import cn.macswelle.campusecurity.database.entities.User;
@@ -11,6 +12,8 @@ import cn.macswelle.campusecurity.common.dto.responseDto.LogoutDto;
 import cn.macswelle.campusecurity.common.utils.JwtUtil;
 
 import cn.macswelle.campusecurity.database.repositories.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,8 @@ public class UserServiceImpl implements LoginService, SignUpService {
   @Autowired
   protected HttpSession session;
 
+  private final String secretKey = "gehanchen";
+
   @Override
   public LoginDto2 login(LoginDto dto) {
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -37,8 +42,6 @@ public class UserServiceImpl implements LoginService, SignUpService {
     List<User> result = userRepository.findByIdAndPassword(dto.getUserId(), dto.getPassword());
     if (result != null && result.size() == 1) {
       loginDto2.setStatus("success");
-//            String token = JwtUtil.generateToken(result.get(0).getId(), "gehanchen");
-//            loginDto2.setAuth(result.get(0).getAuth());
       switch (result.get(0).getAuth()) {
         case 0:
           loginDto2.setAuth("超级管理员");
@@ -55,8 +58,14 @@ public class UserServiceImpl implements LoginService, SignUpService {
       loginDto2.setName(result.get(0).getName());
       //记录登录状态，不能像单体应用那样，微服务架构存在session同步问题，要将session存在redis中
 //            logger.info("access-token: " + token);
-      logger.info("登录: " + result.toString());
-      session.setAttribute("User", result);
+      String token = null;
+      try {
+        token = JwtUtil.generateToken(new ObjectMapper().writeValueAsString(loginDto2), secretKey);
+      } catch (JsonProcessingException e) {
+        e.printStackTrace();
+      }
+      logger.info("登录: " + result.toString() + "token：" + token);
+      loginDto2.setToken(token);
     } else {
       loginDto2.setStatus("failed");
       logger.info("session id: " + session.getId());

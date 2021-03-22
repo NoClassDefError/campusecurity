@@ -15,6 +15,7 @@ window.onload = function () {
   $("#username").text(userDto.name);
   $("#userAuth").text(userDto.auth);
   $("#userDes").text(userDto.description);
+  console.log(userDto.token);
 
   if (userDto.auth !== '只读') {
     locationForm.show();
@@ -36,6 +37,9 @@ window.onload = function () {
               "name": obj.data.name,
               "description": obj.data.description,
               "auth": auth
+            },
+            headers: {
+              "access-token": userDto.token
             },
             success: function (res) {
               if (res.status === 'modify') {
@@ -77,6 +81,9 @@ window.onload = function () {
             name: obj.data.name,
             des: obj.data.description
           },
+          headers: {
+            "access-token": userDto.token
+          },
           success: function () {
             window.alert('修改成功');
             layui.table.reload(getLocationsData());
@@ -103,6 +110,9 @@ function getUsersData() {
         "data": res
       }
     },
+    headers: {
+      "access-token": userDto.token
+    },
     page: true,
     cols: [[
       {field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left'},
@@ -125,6 +135,9 @@ function getLocationsData() {
         "count": Object.keys(res).length,
         "data": res
       }
+    },
+    headers: {
+      "access-token": userDto.token
     },
     page: true,
     cols: [[
@@ -151,6 +164,9 @@ function getDevicesData(locationId) {
         "data": res
       }
     },
+    headers: {
+      "access-token": userDto.token
+    },
     method: 'post',
     cols: [[{field: 'id', title: '设备ID', width: 100, sort: true, fixed: 'left'},
       {field: 'name', title: '名称', width: 100},
@@ -168,6 +184,9 @@ function changeDescription() {
     data: {
       d: $("#changeDes").text()
     },
+    headers: {
+      "access-token": userDto.token
+    },
     success: function (res) {
       if (res.result.get(0) === 'success') {
         window.alert('修改成功');
@@ -180,6 +199,9 @@ function changeDescription() {
 function changePassword() {
   $.post({
     url: gateway + "/user/changePassword",
+    headers: {
+      "access-token": userDto.token
+    },
     data: {
       original: $('#origin').val(),
       newPassword: $('#newP').val()
@@ -202,6 +224,9 @@ function getRecords() {
       locationId: locationId,
       start: new Date($('#start').val().replace(new RegExp("-", "gm"), "/")).getTime(),
       end: new Date($('#end').val().replace(new RegExp("-", "gm"), "/")).getTime()
+    },
+    headers: {
+      "access-token": userDto.token
     },
     url: gateway + "/device/getRecords",
     parseData: function (res) {
@@ -229,6 +254,9 @@ function addLocation() {
       name: $('#name').val(),
       description: $('#des').val()
     },
+    headers: {
+      "access-token": userDto.token
+    },
     success: function (res) {
       console.log(res.result.status);
       if (res.result.status === "add") {
@@ -247,6 +275,9 @@ function addUser() {
       name: $('#user-name').val(),
       description: $('#user-description').val(),
       auth: judgeAuth($('#user-auth').val())
+    },
+    headers: {
+      "access-token": userDto.token
     },
     success: function (res) {
       if (res.status === 'add') {

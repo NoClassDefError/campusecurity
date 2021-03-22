@@ -9,5 +9,6 @@ public class LoginDto2 {
     String name;
     String description;
     String auth;
+    String token;
 }
 
