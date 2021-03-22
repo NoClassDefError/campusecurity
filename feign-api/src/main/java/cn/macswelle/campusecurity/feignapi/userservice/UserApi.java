@@ -27,7 +27,7 @@ public interface UserApi {
     LogoutDto logoutDto();
 
     @RequestMapping(value = "/changeDescription", method = RequestMethod.POST)
-    LoginDto2 changeDescription(String d);
+    HttpResult changeDescription(String d);
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     HttpResult changePassword(@RequestParam("original") String original,

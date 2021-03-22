@@ -11,6 +11,10 @@ window.onload = function () {
   locationForm.toggle();
 
   userDto = JSON.parse(sessionStorage.getItem("loginDto"));
+  if (userDto == null) {
+    window.alert("登录失败");
+    location.href = "index.html";
+  }
   $("#userId").text(userDto.id);
   $("#username").text(userDto.name);
   $("#userAuth").text(userDto.auth);
@@ -32,12 +36,13 @@ window.onload = function () {
         if (auth !== -1) {
           $.post({
             url: gateway + "/user/admin/signUp",
-            data: {
+            data: JSON.stringify({
               "id": obj.data.id,
               "name": obj.data.name,
               "description": obj.data.description,
               "auth": auth
-            },
+            }),
+            contentType: 'application/json',
             headers: {
               "access-token": userDto.token
             },
@@ -76,11 +81,12 @@ window.onload = function () {
       locations.on('edit(test)', function (obj) {
         $.post({
           url: gateway + "/device/admin/changeLocation",
-          data: {
+          data: JSON.stringify({
             id: obj.data.id,
             name: obj.data.name,
             des: obj.data.description
-          },
+          }),
+          contentType: 'application/json',
           headers: {
             "access-token": userDto.token
           },
@@ -182,13 +188,16 @@ function changeDescription() {
   $.post({
     url: gateway + "/user/changeDescription",
     data: {
-      d: $("#changeDes").text()
+      d: $("#changeDes").val()
     },
     headers: {
       "access-token": userDto.token
     },
     success: function (res) {
-      if (res.result.get(0) === 'success') {
+      console.log(res)
+      if (res.result.status === 'success') {
+        userDto.description = $("#changeDes").val();
+        sessionStorage.setItem("loginDto", JSON.stringify(userDto))
         window.alert('修改成功');
         location.reload();
       }
@@ -207,11 +216,10 @@ function changePassword() {
       newPassword: $('#newP').val()
     },
     success: function (res) {
-      if (res.result.get(0) === 'success') {
+      if (res.result.status === 'success') {
         window.alert('密码修改成功，请重新登录');
-        sessionStorage.clear();
-        window.location.href = 'index.html';
-      }
+        logout()
+      }else window.alert('密码错误')
     }
   });
 }
@@ -293,4 +301,9 @@ function judgeAuth(auth) {
   if (auth === "管理员") return 1;
   if (auth === "只读") return 2;
   return -1;
+}
+
+function logout() {
+  sessionStorage.clear();
+  window.location.href = "index.html";
 }

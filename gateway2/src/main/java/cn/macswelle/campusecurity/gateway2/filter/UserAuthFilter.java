@@ -25,21 +25,15 @@ public class UserAuthFilter implements GatewayFilter, Ordered {
    */
   @Override
   public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-    String token = exchange.getRequest().getHeaders().getFirst("access-token");
+    String user = exchange.getRequest().getHeaders().getFirst("user");
     Logger logger = LoggerFactory.getLogger(this.getClass());
-    logger.info("token: "+token);
-    if (token != null) {
-      if (JwtUtil.verifyToken(token, "gehanchen")) {
-        String user = JwtUtil.getUserInfo(token);
-        logger.info(user);
-        try {
-          LoginDto2 loginDto2 = new ObjectMapper().readValue(user, LoginDto2.class);
-          if (loginDto2.getAuth().equals("超级管理员"))
-            return chain.filter(exchange);
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
+    logger.info("user: " + user);
+    try {
+      LoginDto2 loginDto2 = new ObjectMapper().readValue(user, LoginDto2.class);
+      if (loginDto2.getAuth().equals("超级管理员"))
+        return chain.filter(exchange);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
     exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
     return exchange.getResponse().setComplete();

@@ -1,16 +1,13 @@
 package cn.macswelle.campusecurity.userservice.service;
 
-import cn.hutool.json.JSONObject;
-import cn.macswelle.campusecurity.common.dto.responseDto.HttpResult;
-import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
-import cn.macswelle.campusecurity.database.entities.User;
-
 import cn.macswelle.campusecurity.common.dto.requestDto.LoginDto;
 import cn.macswelle.campusecurity.common.dto.requestDto.SignUpDto;
+import cn.macswelle.campusecurity.common.dto.responseDto.HttpResult;
 import cn.macswelle.campusecurity.common.dto.responseDto.LoginDto2;
 import cn.macswelle.campusecurity.common.dto.responseDto.LogoutDto;
+import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
 import cn.macswelle.campusecurity.common.utils.JwtUtil;
-
+import cn.macswelle.campusecurity.database.entities.User;
 import cn.macswelle.campusecurity.database.repositories.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class UserServiceImpl implements LoginService, SignUpService {
   protected UserRepository userRepository;
 
   @Autowired
-  protected HttpSession session;
+  protected HttpServletRequest request;
 
   private final String secretKey = "gehanchen";
 
@@ -39,10 +38,10 @@ public class UserServiceImpl implements LoginService, SignUpService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     //对象转换
     LoginDto2 loginDto2 = new LoginDto2();
-    List<User> result = userRepository.findByIdAndPassword(dto.getUserId(), dto.getPassword());
-    if (result != null && result.size() == 1) {
+    User result = userRepository.findByIdAndPassword(dto.getUserId(), dto.getPassword());
+    if (result != null) {
       loginDto2.setStatus("success");
-      switch (result.get(0).getAuth()) {
+      switch (result.getAuth()) {
         case 0:
           loginDto2.setAuth("超级管理员");
           break;
@@ -53,9 +52,9 @@ public class UserServiceImpl implements LoginService, SignUpService {
           loginDto2.setAuth("只读");
           break;
       }
-      loginDto2.setDescription(result.get(0).getDescription());
-      loginDto2.setId(result.get(0).getId());
-      loginDto2.setName(result.get(0).getName());
+      loginDto2.setDescription(result.getDescription());
+      loginDto2.setId(result.getId());
+      loginDto2.setName(result.getName());
       //记录登录状态，不能像单体应用那样，微服务架构存在session同步问题，要将session存在redis中
 //            logger.info("access-token: " + token);
       String token = null;
@@ -68,21 +67,29 @@ public class UserServiceImpl implements LoginService, SignUpService {
       loginDto2.setToken(token);
     } else {
       loginDto2.setStatus("failed");
-      logger.info("session id: " + session.getId());
       logger.info("登录失败" + dto.toString());
     }
     return loginDto2;
   }
 
+  /**
+   * token一次签发，永久有效，无法在后台使其失效，可以命令前端删除，所以后台不需要logout
+   */
+  @Deprecated
   @Override
   public LogoutDto logout() {
     LogoutDto result = new LogoutDto();
-    User user = (User) session.getAttribute("User");
+    LoginDto2 user = null;
+    try {
+      user = new ObjectMapper().readValue(request.getHeader("user"), LoginDto2.class);
+    } catch (IOException e) {
+      result.setStatus("already has done that");
+    }
     if (user != null) {
       result.setId(user.getId());
       result.setName(user.getName());
       result.setStatus("success");
-      session.removeAttribute("User");
+      //不如session, token一次签发，永久有效，无法在后台使其失效，可以命令前端删除
     } else result.setStatus("already has done that");
     return result;
   }
@@ -143,6 +150,34 @@ public class UserServiceImpl implements LoginService, SignUpService {
 
   @Override
   public HttpResult changePassword(String original, String newPassword) {
-    return null;
+    LoginDto2 user = getUserFromToken();
+    if (user == null)
+      return new HttpResult("status:error");
+    User user1 = userRepository.findByIdAndPassword(user.getId(), original);
+    if (user1 == null) return new HttpResult("status:error");
+    else {
+      userRepository.changePassword(user.getId(), newPassword);
+      return new HttpResult("status:success");
+    }
+  }
+
+  @Override
+  public HttpResult changeDescription(String d) {
+    System.out.println(d);
+    LoginDto2 user = getUserFromToken();
+    if (user == null)
+      return new HttpResult("status:error");
+    userRepository.changeDescription(user.getId(), d);
+    return new HttpResult("status:success");
+  }
+
+  private LoginDto2 getUserFromToken() {
+    LoginDto2 user;
+    try {
+      user = new ObjectMapper().readValue(request.getHeader("user"), LoginDto2.class);
+    } catch (IOException e) {
+      return null;
+    }
+    return user;
   }
 }

@@ -3,6 +3,8 @@ package cn.macswelle.campusecurity.gateway2.filter;
 import cn.macswelle.campusecurity.common.dto.responseDto.LoginDto2;
 import cn.macswelle.campusecurity.common.utils.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.core.Ordered;
@@ -18,18 +20,15 @@ public class DeviceAuthFilter implements GatewayFilter, Ordered {
 
   @Override
   public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-    String token = exchange.getRequest().getHeaders().getFirst("access-token");
-    if (token != null) {
-      if (JwtUtil.verifyToken(token, "gehanchen")) {
-        String user = JwtUtil.getUserInfo(token);
-        try {
-          LoginDto2 loginDto2 = new ObjectMapper().readValue(user, LoginDto2.class);
-          if (loginDto2.getAuth().equals("管理员") || loginDto2.getAuth().equals("超级管理员"))
-            return chain.filter(exchange);
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
+    String user = exchange.getRequest().getHeaders().getFirst("user");
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+    logger.info("user: " + user);
+    try {
+      LoginDto2 loginDto2 = new ObjectMapper().readValue(user, LoginDto2.class);
+      if (loginDto2.getAuth().equals("管理员") || loginDto2.getAuth().equals("超级管理员"))
+        return chain.filter(exchange);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
     exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
     return exchange.getResponse().setComplete();
