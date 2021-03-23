@@ -33,7 +33,7 @@ public interface DeviceManageService {
     List<RecordDto2> getRecords(String locationId, Long start, Long end);
 
     //来自eureka的请求
-    void register(DeviceDto deviceDto);
+    HttpResult register(DeviceDto deviceDto);
 
     void cancel(String id);
 

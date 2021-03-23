@@ -1,7 +1,14 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://configserver:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
+    fetchRegistry: true
+    registry-fetch-interval-seconds: 8
+  instance:
+    prefer-ip-address: true #使用ip地址注册
+    lease-renewal-interval-in-seconds: 4
+    lease-expiration-duration-in-seconds: 12
+
 server:
   port: 8764
 spring:
@@ -12,10 +19,12 @@ spring:
       label: master
       profile: dev
       uri: http://localhost:8888
-#info:
-#  name: NVR GB31415
-#  location: 10#寝室
-#  version: 1.0
-#  independent: false #上位机，下面还有子设备
-#  description:
-
+campusecurity:
+  info:
+    name: NVR GB31415
+    location: 2 #11#寝室
+    version: 1.0
+    independent: false #上位机，下面还有子设备
+    description: 11#楼的摄像机上位机
+    category: 0
+    url: http://localhost:8764

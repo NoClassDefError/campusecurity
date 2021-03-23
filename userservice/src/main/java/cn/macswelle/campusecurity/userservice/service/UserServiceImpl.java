@@ -163,7 +163,7 @@ public class UserServiceImpl implements LoginService, SignUpService {
 
   @Override
   public HttpResult changeDescription(String d) {
-    System.out.println(d);
+//    System.out.println(d);
     LoginDto2 user = getUserFromToken();
     if (user == null)
       return new HttpResult("status:error");

@@ -11,6 +11,8 @@ import cn.macswelle.campusecurity.database.entities.*;
 import cn.macswelle.campusecurity.database.repositories.*;
 import cn.macswelle.campusecurity.feignapi.adapter.AdapterApi;
 import feign.Feign;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
@@ -70,22 +72,29 @@ public class DeviceManageServiceImpl implements DeviceManageService {
   }
 
   @Override
-  public void register(DeviceDto deviceDto) {
+  public HttpResult register(DeviceDto deviceDto) {
     Device device = new Device();
     device.setDescription(deviceDto.getDescription());
     device.setId(deviceDto.getId());
     device.setName(deviceDto.getName());
-    if (deviceDto.getUrl() == null)
-      deviceDto.setUrl(getUrl(deviceDto.getId()));
-    Location location = null;
+    device.setCategory(deviceDto.getCategory());
+    device.setVersion(deviceDto.getVersion());
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+    logger.info(deviceDto.toString());
+
+//    if (deviceDto.getUrl() == null)
+//      deviceDto.setUrl(getUrl(deviceDto.getId()));
+    Location location;
     try {
       location = locationRepository.findById(deviceDto.getLocation()).orElseThrow(() ->
         new EntityNotFoundException(deviceDto.getLocation(), Location.class));
     } catch (EntityNotFoundException e) {
-      e.printStackTrace();
+      logger.info("Can not find location id=" + deviceDto.getLocation());
+      return new HttpResult("status:error");
     }
     device.setLocation(location);
     deviceRepository.save(device);
+    return new HttpResult("status:success");
   }
 
   @Override
@@ -204,6 +213,10 @@ public class DeviceManageServiceImpl implements DeviceManageService {
     return list;
   }
 
+  /**
+   * id 为服务注册中心给的id
+   * 由于数据库里没有url字段，所以使用id从注册中心查询
+   */
   private String getUrl(String id) {
     try {
       return discoveryClient.getInstances(id).get(0).getUri().toURL().toString();

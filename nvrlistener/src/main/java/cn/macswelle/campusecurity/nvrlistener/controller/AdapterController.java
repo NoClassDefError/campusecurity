@@ -2,16 +2,14 @@ package cn.macswelle.campusecurity.nvrlistener.controller;
 
 import cn.macswelle.campusecurity.common.dto.DeviceDto;
 import cn.macswelle.campusecurity.feignapi.adapter.AdapterApi;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cn.macswelle.campusecurity.nvrlistener.DeviceInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 这个微服务与设备管理服务之间的通信是不对称的，
@@ -27,21 +25,30 @@ public class AdapterController implements AdapterApi {
         return null;
     }
 
+    @Autowired
+    private DeviceInfo deviceInfo;
+
     @RequestMapping(value = "/getInfo", method = RequestMethod.POST)
+    @ResponseBody
     @Override
     public DeviceDto getInfo() {
-        ObjectMapper mapper = new ObjectMapper();
-        DeviceDto deviceDto = null;
-        try {
+        DeviceDto deviceDto = new DeviceDto();
+        deviceDto.setUrl(deviceInfo.getUrl());
+        deviceDto.setName(deviceInfo.getName());
+        deviceDto.setVersion(deviceInfo.getVersion());
+        deviceDto.setLocation(deviceInfo.getLocation());
+        deviceDto.setDescription(deviceInfo.getDescription());
+        deviceDto.setCategory(deviceInfo.getCategory());
+//        try {
             //info.json中储存持久化的DeviceDto类对象，此模块不连接数据库，使用文件持久化对象
-            deviceDto = mapper.readValue(
-                    new File(Objects.requireNonNull(this.getClass().getClassLoader().getResource("info.json")).toURI()),
-                    DeviceDto.class);
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            System.out.println("错误，信息文件缺失！");
-        }
+//            deviceDto = mapper.readValue(
+//                    new File(Objects.requireNonNull(this.getClass().getClassLoader().getResource("info.json")).toURI()),
+//                    DeviceDto.class);
+//        } catch (IOException | URISyntaxException e) {
+//            e.printStackTrace();
+//        } catch (NullPointerException e) {
+//            System.out.println("错误，信息文件缺失！");
+//        }
         return deviceDto;
     }
 }

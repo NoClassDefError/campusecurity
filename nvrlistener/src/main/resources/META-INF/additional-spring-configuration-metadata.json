@@ -1,0 +1,39 @@
+{
+  "properties": [
+    {
+      "name": "campusecurity.info.name",
+      "type": "java.lang.String",
+      "description": "Description for campusecurity.info.name."
+    },
+    {
+      "name": "campusecurity.info.location",
+      "type": "java.lang.String",
+      "description": "Description for campusecurity.info.location."
+    },
+    {
+      "name": "campusecurity.info.version",
+      "type": "java.lang.String",
+      "description": "Description for campusecurity.info.version."
+    },
+    {
+      "name": "campusecurity.info.independent",
+      "type": "java.lang.Boolean",
+      "description": "Description for campusecurity.info.independent."
+    },
+    {
+      "name": "campusecurity.info.description",
+      "type": "java.lang.String",
+      "description": "Description for campusecurity.info.description."
+    },
+    {
+      "name": "campusecurity.info.category",
+      "type": "java.lang.Integer",
+      "description": "Description for campusecurity.info.category."
+    },
+    {
+      "name": "campusecurity.info.url",
+      "type": "java.lang.String",
+      "description": "Description for campusecurity.info.url."
+    }
+  ]
+}

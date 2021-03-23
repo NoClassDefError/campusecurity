@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>NVR主页</title>
+</head>
+<body>
+<h1>NVR控制中心</h1>
+
+<div>
+  <h2>本NVR硬件基本信息</h2>
+  <!--/*@thymesVar id="info" type="cn.macswelle.campusecurity.nvrlistener.DeviceInfo"*/-->
+  <table>
+    <tr>
+      <td>类别</td>
+      <td th:text="${info.getCategory()}"></td>
+    </tr>
+    <tr>
+      <td>名称</td>
+      <td th:text="${info.getName()}"></td>
+    </tr>
+    <tr>
+      <td>描述</td>
+      <td th:text="${info.getDescription()}"></td>
+    </tr>
+    <tr>
+      <td>位置</td>
+      <td th:text="${info.getLocation()}"></td>
+    </tr>
+    <tr>
+      <td>url</td>
+      <td th:text="${info.getUrl()}"></td>
+    </tr>
+    <tr>
+      <td>软件版本</td>
+      <td th:text="${info.getVersion()}"></td>
+    </tr>
+  </table>
+</div>
+<div style="height: 500px">
+  <h2>控制面板</h2>
+
+</div>
+<div>
+  <h2>说明</h2>
+  <span>此网页仅为示例，对于不同硬件的上位机，需要分别开发适配</span>
+</div>
+</body>
+</html>
