@@ -14,13 +14,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class UserServiceImpl implements LoginService, SignUpService {
@@ -38,23 +43,14 @@ public class UserServiceImpl implements LoginService, SignUpService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     //对象转换
     LoginDto2 loginDto2 = new LoginDto2();
-    User result = userRepository.findByIdAndPassword(dto.getUserId(), dto.getPassword());
+    User result = userRepository.findByPhoneAndPassword(dto.getEmail(), dto.getPassword());
     if (result != null) {
       loginDto2.setStatus("success");
-      switch (result.getAuth()) {
-        case 0:
-          loginDto2.setAuth("超级管理员");
-          break;
-        case 1:
-          loginDto2.setAuth("管理员");
-          break;
-        case 2:
-          loginDto2.setAuth("只读");
-          break;
-      }
+      loginDto2.setAuth(result.getAuth());
       loginDto2.setDescription(result.getDescription());
       loginDto2.setId(result.getId());
       loginDto2.setName(result.getName());
+      loginDto2.setPhone(result.getPhone());
       //记录登录状态，不能像单体应用那样，微服务架构存在session同步问题，要将session存在redis中
 //            logger.info("access-token: " + token);
       String token = null;
@@ -103,20 +99,11 @@ public class UserServiceImpl implements LoginService, SignUpService {
 
   private UserDto convertUser(User user) {
     UserDto userDto = new UserDto();
-    switch (user.getAuth()) {
-      case 0:
-        userDto.setAuth("超级管理员");
-        break;
-      case 1:
-        userDto.setAuth("管理员");
-        break;
-      case 2:
-        userDto.setAuth("只读");
-        break;
-    }
+    userDto.setAuth(user.getAuth());
     userDto.setDescription(user.getDescription());
     userDto.setId(user.getId());
     userDto.setName(user.getName());
+    userDto.setPhone(user.getPhone());
     return userDto;
   }
 
@@ -127,20 +114,71 @@ public class UserServiceImpl implements LoginService, SignUpService {
     return convertUser(user);
   }
 
+  @Autowired
+  private RedisService redisService;
+
   @Override
   public HttpResult signUp(SignUpDto signUpDto) {
-    if (signUpDto.getId() == null) {
-      User user = new User();
-      user.setAuth(signUpDto.getAuth());
-      user.setDescription(signUpDto.getDescription());
-      user.setName(signUpDto.getName());
-      String id = userRepository.save(user).getId();
-      return new HttpResult("status:add", "id:" + id);
-    } else {
-      userRepository.updateUser(signUpDto.getId(), signUpDto.getName(),
-        signUpDto.getDescription(), signUpDto.getAuth());
-      return new HttpResult("status:modify", "id:" + signUpDto.getId());
+    System.out.println(signUpDto.toString());
+    if (userRepository.findByPhone(signUpDto.getPhone()).isPresent())
+      return new HttpResult("status:failed", "info:该用户已存在");
+    int code = redisService.get(signUpDto.getPhone());
+    if (signUpDto.getCode() != code) return new HttpResult("status:failed", "info:验证码错误");
+    User user = new User();
+    user.setPassword(signUpDto.getPassword());
+    user.setPhone(signUpDto.getPhone());
+    user.setAuth(0);
+    String id = userRepository.save(user).getId();
+    return new HttpResult("status:success", "id:" + id);
+  }
+
+  @Autowired
+  private JavaMailSender mailSender;
+
+  @Value("${spring.mail.username}")
+  private String username;
+
+  @Value("${spring.mail.verify}")
+  private int verify;
+
+  @Override
+  public HttpResult send(String email) {
+    if (email == null) return new HttpResult("status:error");
+    if (userRepository.findByPhone(email).isPresent())
+      return new HttpResult("status:error", "info:该用户已存在");
+    Random random = new Random();
+    Integer code = random.nextInt(900000) + 100000;
+    MimeMessage message = mailSender.createMimeMessage();
+    MimeMessageHelper helper;
+    try {
+      helper = new MimeMessageHelper(message, true);
+      helper.setFrom(username);
+      helper.setTo(email);
+      helper.setSubject("校园智能安防系统 用户注册");
+      helper.setText("<h3>请在" + verify / 60 + "分钟内输入验证码 <b>"
+        + code + "</b> ，若非本人操作请忽略(๑´ڡ`๑)</h3>", true);
+      Runnable runnable = () -> {
+        mailSender.send(message);
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("Email send!");
+      };
+      new Thread(runnable).start();
+    } catch (MessagingException e) {
+      e.printStackTrace();
+      return new HttpResult("status:error");
     }
+    redisService.set(email, code, verify);
+    return new HttpResult("status:success");
+  }
+
+  @Override
+  public HttpResult changeUser(UserDto signUpDto) {
+    System.out.println(signUpDto.toString());
+    if (signUpDto.getAuth() < 0 || signUpDto.getAuth() > 2)
+      return new HttpResult("info:权限设置错误", "status:error");
+    userRepository.updateUser(signUpDto.getId(), signUpDto.getName(),
+      signUpDto.getDescription(), signUpDto.getAuth(), signUpDto.getPhone());
+    return new HttpResult("status:success");
   }
 
   @Override

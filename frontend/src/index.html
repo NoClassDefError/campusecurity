@@ -39,6 +39,51 @@
     </div>
   </div>
   <div id="message"></div>
+
+  <div class="layui-form">
+    手机短信验证，注册新用户
+    <div class="layui-form-item">
+      <label class="layui-form-label" for="user-name">名称</label>
+      <div class="layui-input-block">
+        <input id="user-name" type="text" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label" for="user-phone">邮箱</label>
+      <div class="layui-input-block">
+        <input id="user-phone" type="text" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label" for="user-password">密码</label>
+      <div class="layui-input-block">
+        <input id="user-password" type="password" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label" for="user-password2">再次输入密码</label>
+      <div class="layui-input-block">
+        <input id="user-password2" type="password" onchange="verifyPassword()" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label" for="user-code">验证码</label>
+      <div class="layui-input-block">
+        <input id="user-code" type="text" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" onclick="send()">发送验证码</button>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" onclick="addUser()">注册</button>
+      </div>
+    </div>
+  </div>
+  <div id="message2"></div>
 </div>
 
 </body>

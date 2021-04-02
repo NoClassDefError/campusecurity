@@ -8,6 +8,7 @@ import cn.macswelle.campusecurity.common.dto.responseDto.LogoutDto;
 import cn.macswelle.campusecurity.common.dto.responseDto.UserDto;
 import cn.macswelle.campusecurity.feignapi.userservice.UserApi;
 import cn.macswelle.campusecurity.userservice.service.LoginService;
+import cn.macswelle.campusecurity.userservice.service.RedisService;
 import cn.macswelle.campusecurity.userservice.service.SignUpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,24 +60,42 @@ public class UserController implements UserApi {
 
   @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
   @ResponseBody
+  @Override
   public HttpResult changePassword(String original, String newPassword) {
     return signUpService.changePassword(original, newPassword);
   }
 
-  @RequestMapping(value = "/admin/signUp", method = RequestMethod.POST)
+  @RequestMapping(value = "/send", method = RequestMethod.POST)
   @ResponseBody
+  @Override
+  public HttpResult send(String email) {
+    return signUpService.send(email);
+  }
+
+  @RequestMapping(value = "/signUp", method = RequestMethod.POST)
+  @ResponseBody
+  @Override
   public HttpResult signUp(@RequestBody SignUpDto signUpDto) {
     return signUpService.signUp(signUpDto);
   }
 
+  @RequestMapping(value = "/admin/changeUser", method = RequestMethod.POST)
+  @ResponseBody
+  @Override
+  public HttpResult changeUser(@RequestBody UserDto userDto) {
+    return signUpService.changeUser(userDto);
+  }
+
   @RequestMapping(value = "/admin/remove", method = RequestMethod.POST)
   @ResponseBody
+  @Override
   public HttpResult remove(String id) {
     return signUpService.remove(id);
   }
 
   @RequestMapping(value = "/admin/getUsers", method = RequestMethod.POST)
   @ResponseBody
+  @Override
   public List<UserDto> getUsers() {
     return loginService.getUsers();
   }

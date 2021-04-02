@@ -31,4 +31,20 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  mail:
+    username: 120171020201@ncepu.edu.cn
+    password: Gehanchen260817
+    port: 25
+    host: smtp.ncepu.edu.cn
+    properties:
+      mail:
+        smtp:
+          starttls:
+            required: true
+    verify: 300
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    timeout: 1000
 debug: true

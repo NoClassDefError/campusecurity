@@ -10,30 +10,34 @@ import javax.persistence.*;
 @Table(name = "user")
 public class User {
 
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    @Column(name = "id")
-    private String id;
+  @Id
+  @GeneratedValue(generator = "myIdStrategy")
+  @GenericGenerator(name = "myIdStrategy", strategy = "uuid")
+  @Column(name = "id")
+  private String id;
 
-    @Basic
-    @Column(name = "name", unique = true)
-    private String name;
+  @Basic
+  @Column(name = "name")
+  private String name;
 
-    @Basic
-    @Column(name = "password")
-    private String password;
+  @Basic
+  @Column(name = "password")
+  private String password;
 
-    @Basic
-    @Column(name = "description",columnDefinition = "varchar(255) default '123456'")
-    private String description;
+  @Basic
+  @Column(name = "description")
+  private String description;
 
-    /**
-     * 0 超级管理员，有所有权限
-     * 1 普通管理员，没有账号注册权限
-     * 2 只读
-     */
-    @Basic
-    @Column(name = "auth", nullable = false, columnDefinition = "integer default 1")
-    private Integer auth;
+  /**
+   * 0 超级管理员，有所有权限
+   * 1 普通管理员，没有账号注册权限
+   * 2 只读
+   */
+  @Basic
+  @Column(name = "auth", nullable = false, columnDefinition = "integer default 1")
+  private Integer auth;
+
+  @Basic
+  @Column(name = "phone", nullable = false)
+  private String phone;
 }

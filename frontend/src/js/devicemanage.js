@@ -276,26 +276,6 @@ function addLocation() {
   });
 }
 
-function addUser() {
-  $.post({
-    url: gateway + "/user/admin/signUp",
-    data: {
-      name: $('#user-name').val(),
-      description: $('#user-description').val(),
-      auth: judgeAuth($('#user-auth').val())
-    },
-    headers: {
-      "access-token": userDto.token
-    },
-    success: function (res) {
-      if (res.status === 'add') {
-        $("#message4").text("添加成功，新用户id：" + res.id + " 初始密码：123456");
-        layui.table.reload('users', getUsersData());
-      }
-    }
-  });
-}
-
 function judgeAuth(auth) {
   if (auth === "超级管理员") return 0;
   if (auth === "管理员") return 1;

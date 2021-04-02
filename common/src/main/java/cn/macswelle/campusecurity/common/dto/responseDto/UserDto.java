@@ -7,5 +7,6 @@ public class UserDto {
     String id;
     String name;
     String description;
-    String auth;
+    Integer auth;
+    String phone;
 }
