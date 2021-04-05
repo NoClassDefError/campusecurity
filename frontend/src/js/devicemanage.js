@@ -17,16 +17,16 @@ window.onload = function () {
   }
   $("#userId").text(userDto.id);
   $("#username").text(userDto.name);
-  $("#userAuth").text(userDto.auth);
+  $("#userAuth").text(rejudgeAuth(userDto.auth));
   $("#userDes").text(userDto.description);
   console.log(userDto.token);
 
-  if (userDto.auth !== '只读') {
+  if (userDto.auth !== 2) {
     locationForm.show();
   }
 
   //用户管理
-  if (userDto.auth === '超级管理员') {
+  if (userDto.auth === 0) {
     userManage.show();
     layui.use(['table'], function () {
       const table = layui.table;
@@ -35,7 +35,7 @@ window.onload = function () {
         const auth = judgeAuth(obj.data.auth);
         if (auth !== -1) {
           $.post({
-            url: gateway + "/user/admin/signUp",
+            url: gateway + "/user/admin/changeUser",
             data: JSON.stringify({
               "id": obj.data.id,
               "name": obj.data.name,
@@ -47,14 +47,16 @@ window.onload = function () {
               "access-token": userDto.token
             },
             success: function (res) {
-              if (res.status === 'modify') {
-                $('#message4').text('修改成功');
-                table.reload();
-              }
+              if (res.result.status === 'success') {
+                window.alert('修改成功');
+                // $('#message4').text('修改成功');
+                // table.reload();
+              }else window.alert('修改失败');
             }
           })
         } else {
-          $('#message4').text('修改失败，用户权限只能为超级管理员、管理员或者只读')
+          window.alert('修改失败，用户权限只能为超级管理员、管理员或者只读');
+          // $('#message4').text('修改失败，用户权限只能为超级管理员、管理员或者只读')
         }
       })
     });
@@ -77,7 +79,7 @@ window.onload = function () {
       laydate.render({elem: '#start'});
       laydate.render({elem: '#end'});
     });
-    if (userDto.auth !== '只读') {
+    if (userDto.auth !== 2) {
       locations.on('edit(test)', function (obj) {
         $.post({
           url: gateway + "/device/admin/changeLocation",
@@ -109,6 +111,11 @@ function getUsersData() {
     method: 'post',
     url: gateway + "/user/admin/getUsers",
     parseData: function (res) {
+      console.log(res);
+      for (let a in res) {
+        console.log(res[a]);
+        res[a].auth = rejudgeAuth(res[a].auth);
+      }
       return {
         "code": 0,
         "message": "",
@@ -121,10 +128,11 @@ function getUsersData() {
     },
     page: true,
     cols: [[
-      {field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left'},
+      {field: 'id', title: 'ID', width: 120, sort: true, fixed: 'left'},
       {field: 'name', title: '名称', width: 80, edit: 'text'},
       {field: 'description', title: '描述', width: 500, edit: 'text'},
       {field: 'auth', title: '权限', width: 120, edit: 'text'},
+      {field: 'phone', title: '邮箱', width: 180, edit: 'text'}
     ]]
   }
 }
@@ -219,7 +227,7 @@ function changePassword() {
       if (res.result.status === 'success') {
         window.alert('密码修改成功，请重新登录');
         logout()
-      }else window.alert('密码错误')
+      } else window.alert('密码错误')
     }
   });
 }
@@ -280,6 +288,13 @@ function judgeAuth(auth) {
   if (auth === "超级管理员") return 0;
   if (auth === "管理员") return 1;
   if (auth === "只读") return 2;
+  return -1;
+}
+
+function rejudgeAuth(auth) {
+  if (auth === 0) return "超级管理员";
+  if (auth === 1) return "管理员";
+  if (auth === 2) return "只读";
   return -1;
 }
 

@@ -9,7 +9,7 @@ function login() {
     dataType: 'json',
     contentType: 'application/json',
     data: JSON.stringify({
-      'userId': id.val(),
+      'email': id.val(),
       'password': password.val()
     }),
     success: function (msg) {
