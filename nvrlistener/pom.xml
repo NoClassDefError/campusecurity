@@ -1,31 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>cn.macswelle</groupId>
-        <artifactId>campusecurity</artifactId>
-        <version>1.0</version>
-    </parent>
-    <groupId>cn.macswelle.campusecurity</groupId>
-    <artifactId>nvrlistener</artifactId>
-    <packaging>jar</packaging>
-    <description>接口监听服务之一，用来监听特定的一款网络录像机NVR的http接口</description>
-    <dependencies>
-        <dependency>
-            <groupId>cn.macswelle.campusecurity</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.macswelle.campusecurity</groupId>
-            <artifactId>feign-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-    </dependencies>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>cn.macswelle</groupId>
+    <artifactId>campusecurity</artifactId>
+    <version>1.0</version>
+  </parent>
+  <groupId>cn.macswelle.campusecurity</groupId>
+  <artifactId>nvrlistener</artifactId>
+  <packaging>jar</packaging>
+  <description>接口监听服务之一，用来监听特定的一款网络录像机NVR的http接口</description>
+  <dependencies>
+    <dependency>
+      <groupId>cn.macswelle.campusecurity</groupId>
+      <artifactId>common</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>cn.macswelle.campusecurity</groupId>
+      <artifactId>feign-api</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.bytedeco/javacv-platform -->
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>javacv-platform</artifactId>
+      <version>1.4.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.bytedeco.javacpp-presets/opencv-platform -->
+    <dependency>
+      <groupId>org.bytedeco.javacpp-presets</groupId>
+      <artifactId>opencv-platform</artifactId>
+      <version>3.4.1-1.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>

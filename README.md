@@ -22,6 +22,13 @@
     设备通信服务:
         NVR(摄像头的上位机)适配与通信服务 nvrlistener http://localhost:8764
         烟雾报警器(独立硬件)适配与通信服务 tcpadapter http://localhost:8765
+    rtmp流服务器：
+        rtmp://localhost:1935/live/home
+        http端口 80
+        ./ffmpeg.exe -re -i F:\Videos\1.mp4 -vcodec libx264 -acodec aac -f flv rtmp://127.0.0.1:1935/live/home
+    http-flv流服务器（linux）:
+        推流地址: rtmp://127.0.0.1:9999/myapp/mystream
+        拉流地址：http://127.0.0.1:8082/live/?port=9999&app=myapp&stream=mystream
 
 其他目录：
 

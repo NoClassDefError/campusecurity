@@ -11,28 +11,32 @@ import javax.persistence.*;
 @Entity
 @Data
 public class Device {
-    @Id
-    @Basic
-    @Column(name = "id")
-    private String id;
+  @Id
+  @Basic
+  @Column(name = "id")
+  private String id;
 
-    @Basic
-    @Column(name = "name")
-    private String name;
+  @Basic
+  @Column(name = "name")
+  private String name;
 
-    @Basic
-    @Column(name = "description")
-    private String description;
+  @Basic
+  @Column(name = "description")
+  private String description;
 
-    @Basic
-    @Column(name = "category")
-    private Integer category;
+  @Basic
+  @Column(name = "category")
+  private Integer category;
 
-    @Basic
-    @Column(name = "version")
-    private String version;
+  @Basic
+  @Column(name = "version")
+  private String version;
 
-    @ManyToOne(targetEntity = Location.class)
-    @JoinColumn(name = "location", referencedColumnName = "id")
-    private Location location;
+  @Basic
+  @Column(name = "url")
+  private String url;
+
+  @ManyToOne(targetEntity = Location.class)
+  @JoinColumn(name = "location", referencedColumnName = "id")
+  private Location location;
 }

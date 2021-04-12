@@ -28,3 +28,7 @@ campusecurity:
     description: 11#楼的摄像机上位机
     category: 0
     url: http://localhost:8764
+  rtmp:
+#    url: rtmp://127.0.0.1:1935/live/home
+    url: rtmp://127.0.0.1:9999/myapp/mystream
+    rate: 20

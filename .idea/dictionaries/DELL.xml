@@ -4,10 +4,12 @@
       <w>campusecurity</w>
       <w>devicemanage</w>
       <w>feignapi</w>
+      <w>ffmpeg</w>
       <w>laydate</w>
       <w>layui</w>
       <w>macswelle</w>
       <w>nvrlistener</w>
+      <w>rtmp</w>
     </words>
   </dictionary>
 </component>

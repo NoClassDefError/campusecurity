@@ -3,6 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <title>NVR主页</title>
+  <script th:src="@{~/flv.min.js}" type="text/javascript"></script>
+  <script th:src="@{~/jquery.js}" type="text/javascript"></script>
+  <script type="text/javascript">
+    window.onload = function () {
+      $('#video').toggle();
+    }
+
+    function openCamera() {
+      $("#message").text("正在开启...");
+      $.post({
+        url: "http://localhost:8764/startUpStreaming",
+        success: function (res) {
+          if (res === 'success') {
+            $("#message").text("开启完成");
+            $("#video").show();
+            if (flvjs.isSupported()) {
+              var videoElement = document.getElementById('videoElement');
+              var flvPlayer = flvjs.createPlayer({
+                type: 'flv',
+                isLive: true, // 如果是直播流需要设置这个值为 true
+                url: 'http://localhost:8082/live?port=9999&app=myapp&stream=mystream'
+                // ↑ 拉流示例地址，stream参数一定要和推流时所设置的流密钥一致
+              });
+              flvPlayer.attachMediaElement(videoElement);
+              flvPlayer.load();
+              flvPlayer.play();
+            }
+          } else {
+            $("#message").text("开启失败");
+          }
+        }
+      })
+    }
+
+
+  </script>
 </head>
 <body>
 <h1>NVR控制中心</h1>
@@ -37,9 +73,18 @@
     </tr>
   </table>
 </div>
-<div style="height: 500px">
+<div>
   <h2>控制面板</h2>
-
+  <button id="startLive" type="submit" onclick="openCamera()">开启摄像头推流</button>
+  <div id="message"></div>
+</div>
+<div id="video">
+  <h2>监控视频</h2>
+  <div class="mainContainer">
+    <video id="videoElement" class="centeredVideo" controls autoplay width="1024" height="576">Your browser is too old
+      to support HTML5 video.
+    </video>
+  </div>
 </div>
 <div>
   <h2>说明</h2>
