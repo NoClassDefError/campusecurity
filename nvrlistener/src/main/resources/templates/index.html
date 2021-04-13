@@ -13,7 +13,7 @@
     function openCamera() {
       $("#message").text("正在开启...");
       $.post({
-        url: "http://localhost:8764/startUpStreaming",
+        url: "/startUpStreaming",
         data: {
           "num": $("#num").val() - 1
         },
@@ -40,6 +40,29 @@
       })
     }
 
+    function stopCamera() {
+
+    }
+
+    function register() {
+      let img = document.getElementById('canvas').toDataURL();
+      let base64 = img.substring(img.indexOf(",") - 1, img.length);
+      $.ajax({
+        url: "/storeFace",    //请求的url地址
+        dataType: "json",   //返回格式为json
+        async: true,//请求是否异步，默认为异步，这也是ajax重要特性
+        // contentType:"application/json",
+        data: {
+          "image": base64,
+          "name": $("#name").val(),
+          "groupId": $("#groupId").val()
+        }, //参数值
+        type: "POST", //请求方式
+        success: function (data) {
+          console.log(data);
+        }
+      })
+    }
 
   </script>
 </head>
@@ -80,7 +103,13 @@
   <h2>控制面板</h2>
   <label for="num" th:text="'请输入摄像头序号，共'+${num}+'个'"></label><input type="text" id="num">
   <button id="startLive" type="submit" onclick="openCamera()">开启摄像头推流</button>
+  <button id="endLive" type="submit" onclick="stopCamera()">关闭摄像头推流</button>
   <div id="message"></div>
+
+  <h3>人脸注册</h3>
+  <label for="name" th:text="请输入姓名"></label><input type="text" id="name">
+  <label for="groupId" th:text="请输入组号"></label><input type="text" id="groupId">
+  <button id="register" type="submit" onclick="register()">注册</button>
 </div>
 <div id="video">
   <h2>监控视频</h2>
@@ -88,6 +117,7 @@
     <video id="videoElement" class="centeredVideo" controls autoplay width="1024" height="576">Your browser is too old
       to support HTML5 video.
     </video>
+    <canvas id="canvas" width="1024" height="576" style="display: none;"></canvas>
   </div>
 </div>
 <div>

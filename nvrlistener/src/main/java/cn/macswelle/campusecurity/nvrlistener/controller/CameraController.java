@@ -1,15 +1,19 @@
 package cn.macswelle.campusecurity.nvrlistener.controller;
 
+import cn.macswelle.campusecurity.nvrlistener.service.BaiduAIFace;
+import cn.macswelle.campusecurity.nvrlistener.service.Setingmodel;
 import lombok.Data;
 import org.bytedeco.javacpp.avcodec;
 import org.bytedeco.javacpp.opencv_core;
 import org.bytedeco.javacv.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Data
 @RestController
@@ -19,6 +23,15 @@ public class CameraController {
   private String url;
 
   private String rate;
+
+  @RequestMapping(value = "/storeFace", method = RequestMethod.POST)
+  public Map<String, Object> storeFace(String image, String name, String groupId) throws IOException {
+    Setingmodel setingmodel = new Setingmodel();
+    setingmodel.setImgpath(image);
+    setingmodel.setUserID(name);
+    setingmodel.setGroupID(groupId);
+    return faceapi.FaceRegistration(setingmodel);
+  }
 
   /**
    * 开启监控
@@ -44,18 +57,30 @@ public class CameraController {
 //      canvasFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       final long[] startTime = {0};
       Runnable camera = () -> {
+        int a = 0;
         try {
           while ((frame[0] = grabber.grab()) != null) {
 //        System.out.println("推流..." + url);
 //            canvasFrame.showImage(frame[0]);
             image[0] = converter.convert(frame[0]);
+            if (a % 500 == 0) {
+              a = 0;
+              //每隔200帧进行一次识别
+              String buffers = image[0].imageData().getString();
+              Map<String, Object> searchface = searchFace(buffers);
+              if (searchface == null) System.out.println("没有人");
+              else if (searchface.get("user_id") == null) System.out.println("陌生人");
+
+            }
+            //上传帧至recorder，grabber.grab()不能直接上传，要经过两次转换，即转成image再转回来
             Frame rotatedFrame = converter.convert(image[0]);
             if (startTime[0] == 0) startTime[0] = System.currentTimeMillis();
 //        recorder.setTimestamp(1000 * (System.currentTimeMillis() - startTime));//时间戳
             if (rotatedFrame != null) recorder.record(rotatedFrame);
-            Thread.sleep(40);
+            a++;
+//            Thread.sleep(40);
           }
-        } catch (FrameGrabber.Exception | InterruptedException | FrameRecorder.Exception e) {
+        } catch (FrameGrabber.Exception | FrameRecorder.Exception e) {
           e.printStackTrace();
         }
       };
@@ -76,5 +101,17 @@ public class CameraController {
       e.printStackTrace();
     }
     return grabber;
+  }
+
+  @Autowired
+  private BaiduAIFace faceapi;
+
+  private Map<String, Object> searchFace(String imagebase64) {
+//    String substring = imagebase64.substring(imagebase64.indexOf(",") + 1, imagebase64.length());
+    Setingmodel setingmodel = new Setingmodel();
+    setingmodel.setImgpath(imagebase64);
+    setingmodel.setGroupID("StRoot");
+//    System.out.println(imagebase64);
+    return faceapi.FaceSearch(setingmodel);
   }
 }
