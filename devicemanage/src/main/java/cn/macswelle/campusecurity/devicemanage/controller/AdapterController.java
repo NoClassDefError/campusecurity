@@ -10,13 +10,8 @@ import java.util.List;
 
 @RestController
 public class AdapterController implements AdapterApi {
-    @RequestMapping(value = "/getInfo", method = RequestMethod.POST)
-    @Override
-    public List<DeviceDto> getDevice() {
-        return null;
-    }
 
-    @RequestMapping(value = "/getDevice", method = RequestMethod.POST)
+    @RequestMapping(value = "/getInfo", method = RequestMethod.POST)
     @Override
     public DeviceDto getInfo() {
         return null;

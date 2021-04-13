@@ -23,13 +23,6 @@ public class DeviceManageController implements ManagerApi {
     @Autowired
     private DeviceManageService deviceManageService;
 
-    @RequestMapping(value = "/getSons", method = RequestMethod.POST)
-    @ResponseBody
-    @Override
-    public List<DeviceDto> getSons(String id) {
-        return deviceManageService.getSons(id);
-    }
-
     @RequestMapping(value = "/getDevices", method = RequestMethod.POST)
     @ResponseBody
     @Override

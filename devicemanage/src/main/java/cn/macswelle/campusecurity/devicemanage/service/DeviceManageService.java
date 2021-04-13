@@ -16,8 +16,6 @@ import java.util.List;
  * 接受接口监听服务与设备通信服务通过消息总线传来的数据，写入数据库，包括何人何时出现在何地
  */
 public interface DeviceManageService {
-    //来自用户的请求
-    List<DeviceDto> getSons(String id);
 
     ArrayList<DeviceDto> refreshServices();
 

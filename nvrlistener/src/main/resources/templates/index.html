@@ -14,6 +14,9 @@
       $("#message").text("正在开启...");
       $.post({
         url: "http://localhost:8764/startUpStreaming",
+        data: {
+          "num": $("#num").val() - 1
+        },
         success: function (res) {
           if (res === 'success') {
             $("#message").text("开启完成");
@@ -75,6 +78,7 @@
 </div>
 <div>
   <h2>控制面板</h2>
+  <label for="num" th:text="'请输入摄像头序号，共'+${num}+'个'"></label><input type="text" id="num">
   <button id="startLive" type="submit" onclick="openCamera()">开启摄像头推流</button>
   <div id="message"></div>
 </div>

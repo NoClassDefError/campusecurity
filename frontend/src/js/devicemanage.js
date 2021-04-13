@@ -51,7 +51,7 @@ window.onload = function () {
                 window.alert('修改成功');
                 // $('#message4').text('修改成功');
                 // table.reload();
-              }else window.alert('修改失败');
+              } else window.alert('修改失败');
             }
           })
         } else {
@@ -75,6 +75,9 @@ window.onload = function () {
       locationId = location.id;
       $('#current-location').text(location.id + " " + location.name);
       locations.render(getDevicesData(locationId));
+      locations.on('rowDouble(devices)', function (obj) {
+        window.location.href = obj.data.url;
+      });
       let laydate = layui.laydate;
       laydate.render({elem: '#start'});
       laydate.render({elem: '#end'});

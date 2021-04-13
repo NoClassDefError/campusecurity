@@ -79,6 +79,7 @@ public class DeviceManageServiceImpl implements DeviceManageService {
     device.setName(deviceDto.getName());
     device.setCategory(deviceDto.getCategory());
     device.setVersion(deviceDto.getVersion());
+    device.setUrl(deviceDto.getUrl());
     Logger logger = LoggerFactory.getLogger(this.getClass());
     logger.info(deviceDto.toString());
 
@@ -97,20 +98,6 @@ public class DeviceManageServiceImpl implements DeviceManageService {
     return new HttpResult("status:success");
   }
 
-  @Override
-  public List<DeviceDto> getSons(String id) {
-    adapterApi = Feign.builder().target(AdapterApi.class, getUrl(id));
-    if (adapterApi != null) {
-      return adapterApi.getDevice();
-    } else {
-      try {
-        throw new DeviceNotRespondException();
-      } catch (DeviceNotRespondException e) {
-        e.printStackTrace();
-      }
-    }
-    return null;
-  }
 
   @Override
   public void cancel(String id) {
@@ -185,7 +172,7 @@ public class DeviceManageServiceImpl implements DeviceManageService {
       deviceDto.setLocation(id);
       deviceDto.setName(device.getName());
       deviceDto.setVersion(device.getVersion());
-      deviceDto.setUrl(getUrl(device.getId()));
+      deviceDto.setUrl(device.getUrl());
       list.add(deviceDto);
     });
     return list;

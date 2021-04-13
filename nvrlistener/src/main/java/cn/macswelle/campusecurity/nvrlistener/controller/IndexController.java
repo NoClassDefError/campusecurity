@@ -1,6 +1,7 @@
 package cn.macswelle.campusecurity.nvrlistener.controller;
 
 import cn.macswelle.campusecurity.nvrlistener.DeviceInfo;
+import org.bytedeco.javacpp.videoInputLib;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ public class IndexController {
   public ModelAndView index() {
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("index");
+    modelAndView.addObject("num", videoInputLib.videoInput.listDevices());
     modelAndView.addObject("info", info);
     return modelAndView;
   }

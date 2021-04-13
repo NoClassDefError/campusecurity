@@ -16,12 +16,6 @@ import java.util.List;
 public interface AdapterApi {
 
     /**
-     * 获取接入的硬件
-     */
-    @RequestLine("POST /getDevice")
-    List<DeviceDto> getDevice();
-
-    /**
      * 由于这个方法被原生Feign调用，spring的注解无效，要使用Feign的注解
      */
     @RequestLine("POST /getInfo")

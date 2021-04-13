@@ -22,9 +22,6 @@ import java.util.List;
 @FeignClient(value = "devicemanage", path = "/device")
 public interface ManagerApi {
 
-    @RequestMapping(value = "/getSons", method = RequestMethod.POST)
-    List<DeviceDto> getSons(String id);
-
     @RequestMapping(value = "/getDevices", method = RequestMethod.POST)
     ArrayList<DeviceDto> refreshServices();
 

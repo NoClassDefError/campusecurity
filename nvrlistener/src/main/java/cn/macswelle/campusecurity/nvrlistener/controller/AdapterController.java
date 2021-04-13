@@ -19,12 +19,6 @@ import java.util.List;
 @RestController
 public class AdapterController implements AdapterApi {
 
-    @RequestMapping(value = "/getDevice", method = RequestMethod.POST)
-    @Override
-    public List<DeviceDto> getDevice() {
-        return null;
-    }
-
     @Autowired
     private DeviceInfo deviceInfo;
 

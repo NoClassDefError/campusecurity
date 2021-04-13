@@ -13,12 +13,6 @@ public class AdapterController implements AdapterApi {
 
     @RequestMapping(value = "/getInfo", method = RequestMethod.POST)
     @Override
-    public List<DeviceDto> getDevice() {
-        return null;
-    }
-
-    @RequestMapping(value = "/getDevice", method = RequestMethod.POST)
-    @Override
     public DeviceDto getInfo() {
         return null;
     }
