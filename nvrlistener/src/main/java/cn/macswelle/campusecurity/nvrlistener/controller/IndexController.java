@@ -16,7 +16,9 @@ public class IndexController {
   public ModelAndView index() {
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("index");
-    modelAndView.addObject("num", videoInputLib.videoInput.listDevices());
+    int a = videoInputLib.videoInput.listDevices();
+    modelAndView.addObject("numr", a);
+    modelAndView.addObject("num", Math.min(a, 4));
     modelAndView.addObject("info", info);
     return modelAndView;
   }

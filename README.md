@@ -28,6 +28,7 @@
         ./ffmpeg.exe -re -i F:\Videos\1.mp4 -vcodec libx264 -acodec aac -f flv rtmp://127.0.0.1:1935/live/home
     http-flv流服务器（linux）:
         推流地址: rtmp://127.0.0.1:9999/myapp/mystream
+                rtmp://127.0.0.1:9999/myapp2/mystream
         拉流地址：http://127.0.0.1:8082/live/?port=9999&app=myapp&stream=mystream
 
 其他目录：

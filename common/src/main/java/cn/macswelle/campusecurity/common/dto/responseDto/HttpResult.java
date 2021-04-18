@@ -21,7 +21,10 @@ public class HttpResult {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     for (String s : strings) {
       String[] kv = s.split(":");
-      result.put(kv[0], kv[1]);
+      StringBuilder value = new StringBuilder();
+      for (int i = 1; i < kv.length; i++) value.append(kv[i]).append(':');
+      value.deleteCharAt(value.length() - 1);
+      result.put(kv[0], value.toString());
     }
     logger.info(result.toString());
   }
@@ -32,12 +35,16 @@ public class HttpResult {
     String[] kv1 = string.split("---");
     for (String s : kv1) {
       String[] kv = s.split(":");
-      result.put(kv[0], kv[1]);
+      StringBuilder value = new StringBuilder();
+      for (int i = 1; i < kv.length; i++) value.append(kv[i]).append(':');
+      value.deleteCharAt(value.length() - 1);
+      result.put(kv[0], value.toString());
     }
   }
 
   /**
    * 用于集群内部通信时的json反序列化过程
    */
-  public HttpResult() { }
+  public HttpResult() {
+  }
 }

@@ -1,18 +1,23 @@
 package cn.macswelle.campusecurity.nvrlistener.controller;
 
+import cn.macswelle.campusecurity.common.dto.responseDto.HttpResult;
 import cn.macswelle.campusecurity.nvrlistener.service.BaiduAIFace;
 import cn.macswelle.campusecurity.nvrlistener.service.Setingmodel;
+import cn.macswelle.campusecurity.nvrlistener.service.VirtualCameraService;
 import lombok.Data;
-import org.bytedeco.javacpp.avcodec;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacv.*;
+import org.bytedeco.javacv.FrameGrabber;
+import org.bytedeco.javacv.FrameRecorder;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -20,11 +25,19 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "campusecurity.rtmp")
 public class CameraController {
 
-  private String url;
+  private List<String> url;//推流地址
+
+//  private List<String> http;//拉流地址
 
   private String rate;
 
+  private static Map<Integer, VirtualCameraService> cameras = new HashMap<>();
+
+  @Autowired
+  private BaiduAIFace faceapi;
+
   @RequestMapping(value = "/storeFace", method = RequestMethod.POST)
+  @ResponseBody
   public Map<String, Object> storeFace(String image, String name, String groupId) throws IOException {
     Setingmodel setingmodel = new Setingmodel();
     setingmodel.setImgpath(image);
@@ -33,85 +46,44 @@ public class CameraController {
     return faceapi.FaceRegistration(setingmodel);
   }
 
+  @RequestMapping(value = "/stopStreaming", method = RequestMethod.POST)
+  @ResponseBody
+  public HttpResult stopStream() {
+    LoggerFactory.getLogger(this.getClass()).info("当前cameras状态：" + cameras);
+    try {
+      for (VirtualCameraService service : cameras.values()) service.stop();
+    } catch (IndexOutOfBoundsException e) {
+      return new HttpResult("status:error", "info:没有该摄像头或其已经关闭");
+    } catch (FrameGrabber.Exception | FrameRecorder.Exception | InterruptedException e) {
+      return new HttpResult("status:error", "info:没有关成");
+    }
+    return new HttpResult("status:success");
+  }
+
   /**
-   * 开启监控
+   * 开启监控，所有通道
    * 实现ffmpeg的RTMP推流（up streaming/push/publish），也就是将视频数据传送到rtmp流服务器。
    */
   @RequestMapping(value = "/startUpStreaming", method = RequestMethod.POST)
-  public String startUpStream(Integer num) {
-//    System.out.println("  " + url + " " + rate);
-    OpenCVFrameGrabber grabber = CameraController.getCamera(num);
+  @ResponseBody
+  public HttpResult startUpStream(int i) {
+//    int num = videoInputLib.videoInput.listDevices();
+//    System.out.println("  " + url.get(0) + " " + http.get(0));
+    LoggerFactory.getLogger(this.getClass()).info("正在开启:cam" + i + " 当前cameras状态：" + cameras);
+//    if (num > url.size()) num = url.size();
     try {
-      OpenCVFrameConverter.ToIplImage converter = new OpenCVFrameConverter.ToIplImage();
-      final Frame[] frame = {grabber.grab()};
-      final opencv_core.IplImage[] image = {converter.convert(frame[0])};//将一帧转为图像，可以进行人脸识别、加水印等处理
-      int width = image[0].width();
-      int height = image[0].height();
-      FrameRecorder recorder = FrameRecorder.createDefault(url, width, height);
-      recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
-      recorder.setFormat("flv");
-      recorder.setFrameRate(Double.parseDouble(rate));
-      recorder.start();
-//      CanvasFrame canvasFrame = new CanvasFrame("camera");
-//      canvasFrame.setVisible(true);
-//      canvasFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      final long[] startTime = {0};
-      Runnable camera = () -> {
-        int a = 0;
-        try {
-          while ((frame[0] = grabber.grab()) != null) {
-//        System.out.println("推流..." + url);
-//            canvasFrame.showImage(frame[0]);
-            image[0] = converter.convert(frame[0]);
-            if (a % 500 == 0) {
-              a = 0;
-              //每隔200帧进行一次识别
-              String buffers = image[0].imageData().getString();
-              Map<String, Object> searchface = searchFace(buffers);
-              if (searchface == null) System.out.println("没有人");
-              else if (searchface.get("user_id") == null) System.out.println("陌生人");
+//      for (int i = 0; i < num; i++) {
 
-            }
-            //上传帧至recorder，grabber.grab()不能直接上传，要经过两次转换，即转成image再转回来
-            Frame rotatedFrame = converter.convert(image[0]);
-            if (startTime[0] == 0) startTime[0] = System.currentTimeMillis();
-//        recorder.setTimestamp(1000 * (System.currentTimeMillis() - startTime));//时间戳
-            if (rotatedFrame != null) recorder.record(rotatedFrame);
-            a++;
-//            Thread.sleep(40);
-          }
-        } catch (FrameGrabber.Exception | FrameRecorder.Exception e) {
-          e.printStackTrace();
-        }
-      };
-      new Thread(camera).start();
+      if (cameras.size() <= i) {
+        VirtualCameraService service = new VirtualCameraService(i, url.get(i), rate, faceapi);
+        new Thread(service).start();
+        cameras.put(i, service);
+      } else cameras.get(i).restart(url.get(i), rate);
+//      }
     } catch (IOException e) {
       e.printStackTrace();
-      return "error";
+      return new HttpResult("status:error", "info:视频流服务器没有启动");
     }
-    return "success";
-  }
-
-  public static OpenCVFrameGrabber getCamera(int num) {
-    System.out.println(num);
-    OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(num);
-    try {
-      grabber.start();   //开始获取摄像头数据
-    } catch (FrameGrabber.Exception e) {
-      e.printStackTrace();
-    }
-    return grabber;
-  }
-
-  @Autowired
-  private BaiduAIFace faceapi;
-
-  private Map<String, Object> searchFace(String imagebase64) {
-//    String substring = imagebase64.substring(imagebase64.indexOf(",") + 1, imagebase64.length());
-    Setingmodel setingmodel = new Setingmodel();
-    setingmodel.setImgpath(imagebase64);
-    setingmodel.setGroupID("StRoot");
-//    System.out.println(imagebase64);
-    return faceapi.FaceSearch(setingmodel);
+    return new HttpResult("status:success", "info:" + cameras);
   }
 }

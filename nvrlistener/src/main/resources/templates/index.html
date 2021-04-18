@@ -10,38 +10,92 @@
       $('#video').toggle();
     }
 
-    function openCamera() {
+    let flvPlayer = [];
+
+    let url = ['http://localhost:8082/live?port=9999&app=myapp&stream=mystream',
+      'http://localhost:8082/live?port=9999&app=myapp2&stream=mystream',
+      'http://localhost:8082/live?port=9999&app=myapp3&stream=mystream',
+      'http://localhost:8082/live?port=9999&app=myapp4&stream=mystream'];
+
+    function openAllCam() {
+      $("#video").append($("<h2>监控视频</h2>"));
+      for (let i = 0; i < [[${num}]]; i++) {
+        addPlayer(i);
+        openCamera(i);
+      }
+    }
+
+    function stopAllCam() {
+      $("#video").empty();
+      stopCamera();
+    }
+
+    function openCamera(i) {
       $("#message").text("正在开启...");
+      console.log(i + "准备拉流" + url[i])
       $.post({
         url: "/startUpStreaming",
         data: {
-          "num": $("#num").val() - 1
+          i: i
         },
         success: function (res) {
-          if (res === 'success') {
+          if (res.result.status === 'success') {
             $("#message").text("开启完成");
+            console.log("视频路数" + res.result.info);
             $("#video").show();
             if (flvjs.isSupported()) {
-              var videoElement = document.getElementById('videoElement');
-              var flvPlayer = flvjs.createPlayer({
+              // let player = flvPlayer[i];
+              // if (player == null) {
+              let player = flvjs.createPlayer({
                 type: 'flv',
                 isLive: true, // 如果是直播流需要设置这个值为 true
-                url: 'http://localhost:8082/live?port=9999&app=myapp&stream=mystream'
-                // ↑ 拉流示例地址，stream参数一定要和推流时所设置的流密钥一致
+                // 奇怪的是，头一个就会被浏览器同源策略拦截，而后一个写死了就不会
+                // url: res.result.info
+                url: url[i]
               });
-              flvPlayer.attachMediaElement(videoElement);
-              flvPlayer.load();
-              flvPlayer.play();
+              player.attachMediaElement(document.getElementById("video" + i));
+              flvPlayer.push(player);
+              // }
+              player.load();
+              player.play();
             }
           } else {
-            $("#message").text("开启失败");
+            $("#message").text("开启失败" + res.result.info);
           }
         }
       })
     }
 
-    function stopCamera() {
+    function addPlayer(num) {
+      let div = $("<div>");
+      let span = $("<h3>");
+      span.html("视频" + num);
+      let video = $("<video class='centeredVideo' controls autoplay width='1024' height='576'>");
+      video.attr('id', 'video' + num);
+      div.append(span);
+      div.append(video);
+      $("#video").append(div);
+    }
 
+    function stopCamera() {
+      $("#message").text("正在关闭...");
+      console.log("全部关闭：" + flvPlayer);
+      flvPlayer.forEach(function (item) {
+        item.unload();
+        item.destroy();
+      })
+      flvPlayer = [];
+      $.post({
+        url: "/stopStreaming",
+        success: function (res) {
+          if (res.result.status === 'success') {
+            $("#message").text("已关闭");
+          } else {
+            $("#message").text("失败" + res.result.info);
+          }
+          $("#video").toggle();
+        }
+      })
     }
 
     function register() {
@@ -99,26 +153,38 @@
     </tr>
   </table>
 </div>
+
+<h2>控制面板</h2>
 <div>
-  <h2>控制面板</h2>
-  <label for="num" th:text="'请输入摄像头序号，共'+${num}+'个'"></label><input type="text" id="num">
-  <button id="startLive" type="submit" onclick="openCamera()">开启摄像头推流</button>
-  <button id="endLive" type="submit" onclick="stopCamera()">关闭摄像头推流</button>
+  <h3>监控开关</h3>
+  <span th:text="'检测到摄像头共'+${numr}+'个，只支持最多4路视频输出'"></span>
+  <button id="startLive" type="submit" onclick="openAllCam()">开启摄像头推流</button>
+  <button id="endLive" type="submit" onclick="stopAllCam()">关闭摄像头推流</button>
   <div id="message"></div>
+
+  <h3>视频存储</h3>
 
   <h3>人脸注册</h3>
   <label for="name" th:text="请输入姓名"></label><input type="text" id="name">
   <label for="groupId" th:text="请输入组号"></label><input type="text" id="groupId">
   <button id="register" type="submit" onclick="register()">注册</button>
+
+  <h3>事件记录</h3>
 </div>
+
 <div id="video">
-  <h2>监控视频</h2>
-  <div class="mainContainer">
-    <video id="videoElement" class="centeredVideo" controls autoplay width="1024" height="576">Your browser is too old
-      to support HTML5 video.
-    </video>
-    <canvas id="canvas" width="1024" height="576" style="display: none;"></canvas>
-  </div>
+  <!--  <h2>监控视频</h2>-->
+  <!--  <div>-->
+  <!--    <h3>视频1</h3>-->
+  <!--    <div class="mainContainer">-->
+  <!--      <video id="video1" class="centeredVideo" controls autoplay width="1024" height="576">Your browser is too old-->
+  <!--        to support HTML5 video.-->
+  <!--      </video>-->
+  <!--      <canvas id="canvas" width="1024" height="576" style="display: none;"></canvas>-->
+  <!--    </div>-->
+  <!--  </div>-->
+
+
 </div>
 <div>
   <h2>说明</h2>

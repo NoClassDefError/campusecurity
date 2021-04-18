@@ -30,5 +30,13 @@ campusecurity:
     url: http://localhost:8764
   rtmp:
 #    url: rtmp://127.0.0.1:1935/live/home
-    url: rtmp://127.0.0.1:9999/myapp/mystream
+    url:
+      - 'rtmp://127.0.0.1:9999/myapp/mystream'
+      - 'rtmp://127.0.0.1:9999/myapp2/mystream'
+      - 'rtmp://127.0.0.1:9999/myapp3/mystream'
+      - 'rtmp://127.0.0.1:9999/myapp4/mystream'
+
+    http:
+      - 'http://localhost:8082/live/?port=9999&app=myapp&stream=mystream'
+      - 'http://127.0.0.1:8082/live/?port=9999&app=myapp2&stream=mystream'
     rate: 20
