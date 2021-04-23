@@ -19,6 +19,12 @@ spring:
       label: master
       profile: dev
       uri: http://localhost:8888
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: 123456
+
 campusecurity:
   info:
     name: NVR GB31415
@@ -35,8 +41,10 @@ campusecurity:
       - 'rtmp://127.0.0.1:9999/myapp2/mystream'
       - 'rtmp://127.0.0.1:9999/myapp3/mystream'
       - 'rtmp://127.0.0.1:9999/myapp4/mystream'
-
     http:
       - 'http://localhost:8082/live/?port=9999&app=myapp&stream=mystream'
       - 'http://127.0.0.1:8082/live/?port=9999&app=myapp2&stream=mystream'
     rate: 20
+  face:
+    apiKey: vARlMCkDxdlWELHcUjQtghSM
+    secretKey: ldQbaoHmX9qFezr0b08W2rqmGyfIqvLw

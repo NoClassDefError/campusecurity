@@ -1,13 +1,12 @@
 package cn.macswelle.campusecurity.nvrlistener.controller;
 
 import cn.macswelle.campusecurity.common.dto.responseDto.HttpResult;
-import cn.macswelle.campusecurity.nvrlistener.service.BaiduAIFace;
-import cn.macswelle.campusecurity.nvrlistener.service.Setingmodel;
 import cn.macswelle.campusecurity.nvrlistener.service.VirtualCameraService;
 import lombok.Data;
 import org.bytedeco.javacv.FrameGrabber;
 import org.bytedeco.javacv.FrameRecorder;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,20 +30,10 @@ public class CameraController {
 
   private String rate;
 
-  private static Map<Integer, VirtualCameraService> cameras = new HashMap<>();
-
   @Autowired
-  private BaiduAIFace faceapi;
+  private BeanFactory beanFactory;
 
-  @RequestMapping(value = "/storeFace", method = RequestMethod.POST)
-  @ResponseBody
-  public Map<String, Object> storeFace(String image, String name, String groupId) throws IOException {
-    Setingmodel setingmodel = new Setingmodel();
-    setingmodel.setImgpath(image);
-    setingmodel.setUserID(name);
-    setingmodel.setGroupID(groupId);
-    return faceapi.FaceRegistration(setingmodel);
-  }
+  private static Map<Integer, VirtualCameraService> cameras = new HashMap<>();
 
   @RequestMapping(value = "/stopStreaming", method = RequestMethod.POST)
   @ResponseBody
@@ -75,7 +64,8 @@ public class CameraController {
 //      for (int i = 0; i < num; i++) {
 
       if (cameras.size() <= i) {
-        VirtualCameraService service = new VirtualCameraService(i, url.get(i), rate, faceapi);
+        VirtualCameraService service = beanFactory.getBean(VirtualCameraService.class);
+        service.init(i, url.get(i), rate);
         new Thread(service).start();
         cameras.put(i, service);
       } else cameras.get(i).restart(url.get(i), rate);

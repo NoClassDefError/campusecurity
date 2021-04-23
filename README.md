@@ -16,6 +16,7 @@
     配置中心 configserver localhost:8888
     用户服务 userservice http://localhost:8762 或  lb://userservice
     设备管理服务 devicemanage http://localhost:8763 或 lb://devicemanage
+    数据处理服务 facialrecognision http://localhost:8766
     网关兼前端v1（基于模板） geteway http://localhost:8889
     网关v2 （前后端分离）gateway2 http://localhost:8889
         前端 frontend 在开发环境中直接在intellij中打开，url不定
@@ -30,6 +31,10 @@
         推流地址: rtmp://127.0.0.1:9999/myapp/mystream
                 rtmp://127.0.0.1:9999/myapp2/mystream
         拉流地址：http://127.0.0.1:8082/live/?port=9999&app=myapp&stream=mystream
+    人脸识别消息队列rabbitmq：
+        localhost:4369
+        监控页面 http://localhost:15672
+        sudo service rabbitmq-server start
 
 其他目录：
 

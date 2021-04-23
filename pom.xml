@@ -30,6 +30,7 @@
         <module>feign-api</module>
         <module>database</module>
         <module>gateway2</module>
+        <module>facial_recognision</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

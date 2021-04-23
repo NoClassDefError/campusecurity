@@ -6,6 +6,8 @@
     <file url="file://$PROJECT_DIR$/database/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/devicemanage/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/facial_recognision/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/facial_recognision/src/main/resources/application.yml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/feign-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway2/src/main/java" charset="UTF-8" />

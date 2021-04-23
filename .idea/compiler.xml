@@ -14,6 +14,7 @@
         <module name="nvrlistener" />
         <module name="eureka" />
         <module name="devicemanage" />
+        <module name="facial_recognision" />
         <module name="configserver" />
         <module name="gateway" />
         <module name="gateway2" />
@@ -41,6 +42,7 @@
       <module name="devicemanage" options="-parameters" />
       <module name="drivers" options="-parameters" />
       <module name="eureka" options="-parameters" />
+      <module name="facial_recognision" options="-parameters" />
       <module name="feign-api" options="-parameters" />
       <module name="feignApi" options="-parameters" />
       <module name="frontend" options="-parameters" />

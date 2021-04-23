@@ -63,7 +63,7 @@ public class EurekaStateListener {
     }
     AdapterApi adapterClient = Feign.builder()
       .decoder(new ResponseEntityDecoder(new SpringDecoder(messageConverters)))
-      .target(AdapterApi.class, url);
+      .target(AdapterApi.class, url);//由于没有对象参数，不需要配置encoder
     if (adapterClient != null) {
       DeviceDto info = adapterClient.getInfo();
       if (info != null) {
