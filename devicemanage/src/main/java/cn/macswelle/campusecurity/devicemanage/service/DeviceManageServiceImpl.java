@@ -89,7 +89,7 @@ public class DeviceManageServiceImpl implements DeviceManageService {
     try {
       location = locationRepository.findById(deviceDto.getLocation()).orElseThrow(() ->
         new EntityNotFoundException(deviceDto.getLocation(), Location.class));
-    } catch (EntityNotFoundException e) {
+    } catch (Exception e) {
       logger.info("Can not find location id=" + deviceDto.getLocation());
       return new HttpResult("status:error");
     }

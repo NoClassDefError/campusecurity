@@ -2,17 +2,25 @@ package cn.macswelle.campusecurity.nvrlistener.service;
 
 import cn.macswelle.campusecurity.common.dto.requestDto.FaceDto;
 import cn.macswelle.campusecurity.nvrlistener.controller.FaceController;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.bytedeco.javacpp.avcodec;
 import org.bytedeco.javacpp.opencv_core;
 import org.bytedeco.javacv.*;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import sun.misc.BASE64Encoder;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * 视频的处理与推流服务，作为生命周期独立的线程。
@@ -74,38 +82,53 @@ public class VirtualCameraService implements Runnable {
 //        System.out.println("推流..." + url);
         canvasFrame.showImage(frame);
         image = converter.convert(frame);
-        if (a % 500 == 0) {
+        if (a % 5000 == 0) {
           a = 0;
           //每隔200帧进行一次识别，此处要加入消息队列
           logger.info(info + " 执行识别");
-          searchFace(image);
+          Java2DFrameConverter java2dFrameConverter = new Java2DFrameConverter();
+          searchFace(java2dFrameConverter.getBufferedImage(frame));
         }
         //上传帧至recorder，grabber.grab()不能直接上传，要经过两次转换，即转成image再转回来
         Frame rotatedFrame = converter.convert(image);
 //        if (startTime == 0) startTime = System.currentTimeMillis();
 //        recorder.setTimestamp(1000 * (System.currentTimeMillis() - startTime));//时间戳
-
         if (run && rotatedFrame != null) recorder.record(rotatedFrame);
         a++;
 //            Thread.sleep(40);
       }
       logger.info(info + " 视频处理线程关闭");
     } catch (FrameGrabber.Exception | FrameRecorder.Exception e) {
-      logger.info(info + "视频处理中断，视频流提前关闭");
+      logger.info(info + " 视频处理中断，视频流提前关闭");
     }
   }
 
   @Autowired
   private FaceController faceController;
 
-  private void searchFace(opencv_core.IplImage image) {
-    String image64 = image.imageData().getString();
+  private void searchFace(BufferedImage image) {
+//    System.err.println(image.imageData().getString());
+//    String image64 = Base64.encodeBase64String(image.imageData().getString().getBytes());
+//    System.out.println(image64);
+//    String image64 = MatToBase64(image);
     FaceDto faceDto = new FaceDto();
-    faceDto.setImage(image64);
-    List<String> groupId = new ArrayList<>();
-    groupId.add("ghc");
-    faceDto.setGroup_id_list(groupId);
+    faceDto.setImage(bufferedImageToBase64(image));
     faceController.faceReco(faceDto);
+  }
+
+  /**
+   * https://github.com/bytedeco/javacv/issues/1094
+   * OpenCV Mat to JavaCV Mat conversion https://github.com/bytedeco/javacpp/issues/38
+   */
+  public static String bufferedImageToBase64(BufferedImage image) {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    try {
+      ImageIO.write(image, "jpg", outputStream);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    BASE64Encoder encoder = new BASE64Encoder();
+    return encoder.encode(outputStream.toByteArray());
   }
 
   public void stop() throws FrameGrabber.Exception, FrameRecorder.Exception, InterruptedException {

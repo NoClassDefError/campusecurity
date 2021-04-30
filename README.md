@@ -18,7 +18,7 @@
     设备管理服务 devicemanage http://localhost:8763 或 lb://devicemanage
     数据处理服务 facialrecognision http://localhost:8766
     网关兼前端v1（基于模板） geteway http://localhost:8889
-    网关v2 （前后端分离）gateway2 http://localhost:8889
+    网关v2 （前后端分离）gateway2 http://localhost:8892
         前端 frontend 在开发环境中直接在intellij中打开，url不定
     设备通信服务:
         NVR(摄像头的上位机)适配与通信服务 nvrlistener http://localhost:8764
@@ -32,7 +32,7 @@
                 rtmp://127.0.0.1:9999/myapp2/mystream
         拉流地址：http://127.0.0.1:8082/live/?port=9999&app=myapp&stream=mystream
     人脸识别消息队列rabbitmq：
-        localhost:4369
+        amqp://localhost:5672
         监控页面 http://localhost:15672
         sudo service rabbitmq-server start
 

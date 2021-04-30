@@ -8,7 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "campusecurity.info")
 public final class DeviceInfo {
-  public static String name, location, url, description, version;
-  public static boolean independent;
-  public static Integer category;
+  public String name;
+  public String location;
+  public String url;
+  public String description;
+  public String version;
+  public boolean independent;
+  public Integer category;
 }

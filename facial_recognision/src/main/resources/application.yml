@@ -12,7 +12,7 @@ server:
   port: 8766
 spring:
   application:
-    name: userservice
+    name: facial_recognision
   cloud:
     config:
       label: master
@@ -31,3 +31,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  rabbitmq:
+    host: 192.168.0.103
+    port: 5672
+    username: admin
+    password: 123456
+campusecurity:
+  face:
+    apiKey: 91GjPmdZWv55Yyueh9znGNk6
+    secretKey: 3lfhI7s22mSAMPROvztuHDtbgb7moOKs
+    appId: 24064772
+    groupIdList: ghc

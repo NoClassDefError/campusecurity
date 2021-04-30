@@ -8,6 +8,7 @@ public class FaceRegDto {
   private String image_type = "BASE64";
   private String group_id;
   private String user_id;
+  private String name;
   private String user_info;
   private String quality_control = "NONE";
   private String liveness_control = "NONE";
