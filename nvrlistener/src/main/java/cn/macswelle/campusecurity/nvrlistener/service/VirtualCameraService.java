@@ -6,8 +6,6 @@ import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.bytedeco.javacpp.avcodec;
 import org.bytedeco.javacpp.opencv_core;
 import org.bytedeco.javacv.*;
-import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +15,7 @@ import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
 
 /**
  * 视频的处理与推流服务，作为生命周期独立的线程。
@@ -46,6 +41,9 @@ public class VirtualCameraService implements Runnable {
   private String info = null;
   private final Logger logger = LoggerFactory.getLogger(VirtualCameraService.class);
 
+  /**
+   * 调用此方法之后一定要init()
+   */
   public VirtualCameraService() {
 
   }
@@ -81,7 +79,6 @@ public class VirtualCameraService implements Runnable {
       while (run && (frame = grabber.grab()) != null) {
 //        System.out.println("推流..." + url);
         canvasFrame.showImage(frame);
-        image = converter.convert(frame);
         if (a % 5000 == 0) {
           a = 0;
           //每隔200帧进行一次识别，此处要加入消息队列
@@ -89,6 +86,7 @@ public class VirtualCameraService implements Runnable {
           Java2DFrameConverter java2dFrameConverter = new Java2DFrameConverter();
           searchFace(java2dFrameConverter.getBufferedImage(frame));
         }
+        image = converter.convert(frame);
         //上传帧至recorder，grabber.grab()不能直接上传，要经过两次转换，即转成image再转回来
         Frame rotatedFrame = converter.convert(image);
 //        if (startTime == 0) startTime = System.currentTimeMillis();

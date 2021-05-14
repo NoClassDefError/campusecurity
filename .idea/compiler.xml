@@ -10,14 +10,14 @@
         <module name="userservice" />
         <module name="commons" />
         <module name="tcpadapter" />
-        <module name="facial_recognision" />
         <module name="feign-api" />
         <module name="nvrlistener" />
         <module name="eureka" />
+        <module name="gateway2" />
         <module name="devicemanage" />
         <module name="configserver" />
         <module name="gateway" />
-        <module name="gateway2" />
+        <module name="facial_recognision" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

@@ -14,7 +14,7 @@ public class AdapterController implements AdapterApi {
   @ResponseBody
   @Override
   public DeviceDto getInfo() {
-    System.out.println("请求被执行");
+//    System.out.println("请求被执行");
     return null;
   }
 }

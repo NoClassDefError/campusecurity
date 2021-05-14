@@ -8,5 +8,5 @@ public class FaceDto {
   private String group_id;
   private String user_id;
   private String user_info;
-  private String score;
+  private Double score;
 }

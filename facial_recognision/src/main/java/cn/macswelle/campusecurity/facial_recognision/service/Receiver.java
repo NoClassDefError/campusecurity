@@ -92,8 +92,8 @@ public class Receiver {
     options.put("match_threshold", "70");
     options.put("quality_control", "NORMAL");
     options.put("liveness_control", "LOW");
-    logger.info(faceDto.getString("image"));
-    logger.info(faceDto.getString("image_type"));
+    //logger.info(faceDto.getString("image"));
+    //logger.info(faceDto.getString("image_type"));
     JSONObject jsonObject = client.search(faceDto.getString("image"), faceDto.getString("image_type"), groupIdList, options);
     logger.info(jsonObject.toString());
     FaceDto response = new FaceDto();
@@ -111,7 +111,7 @@ public class Receiver {
         response.setGroup_id((String) array.getJSONObject(0).get("group_id"));
         response.setUser_id((String) array.getJSONObject(0).get("user_id"));
         response.setUser_info((String) array.getJSONObject(0).get("user_info"));
-        response.setScore((String) array.getJSONObject(0).get("score"));
+        response.setScore((Double)array.getJSONObject(0).get("score"));
         logger.info("recognize: " + response);
         record(response, messageDto.getJSONObject("message"), toFile(faceDto.getString("image")));
       } else {

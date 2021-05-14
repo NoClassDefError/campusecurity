@@ -20,7 +20,7 @@ spring:
       profile: dev
       uri: http://localhost:8888
   rabbitmq:
-    host: 192.168.0.103
+    host: 192.168.31.207
     port: 5672
     username: admin
     password: 123456
@@ -37,15 +37,15 @@ campusecurity:
   rtmp:
 #    url: rtmp://127.0.0.1:1935/live/home
     url:
-      - 'rtmp://192.168.0.103:9999/myapp/mystream'
-      - 'rtmp://192.168.0.103:9999/myapp2/mystream'
-      - 'rtmp://192.168.0.103:9999/myapp3/mystream'
-      - 'rtmp://192.168.0.103:9999/myapp4/mystream'
+      - 'rtmp://192.168.31.207:9999/myapp/mystream'
+      - 'rtmp://192.168.31.207:9999/myapp2/mystream'
+      - 'rtmp://192.168.31.207:9999/myapp3/mystream'
+      - 'rtmp://192.168.31.207:9999/myapp4/mystream'
 #      - 'rtmp://127.0.0.1:9999/myapp/mystream'
 #      - 'rtmp://127.0.0.1:9999/myapp2/mystream'
 #      - 'rtmp://127.0.0.1:9999/myapp3/mystream'
 #      - 'rtmp://127.0.0.1:9999/myapp4/mystream'
     http:
-      - 'http://192.168.0.103:8082/live/?port=9999&app=myapp&stream=mystream'
-      - 'http://192.168.0.103:8082/live/?port=9999&app=myapp2&stream=mystream'
+      - 'http://192.168.31.207:8082/live/?port=9999&app=myapp&stream=mystream'
+      - 'http://192.168.31.207:8082/live/?port=9999&app=myapp2&stream=mystream'
     rate: 20
