@@ -1,7 +1,8 @@
 package cn.macswelle.campusecurity.nvrlistener.service;
 
+import cn.macswelle.campusecurity.sdk.DeviceInfo;
+import cn.macswelle.campusecurity.sdk.service.AmqpService;
 import cn.macswelle.campusecurity.common.dto.requestDto.FaceDto;
-import cn.macswelle.campusecurity.nvrlistener.controller.FaceController;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.bytedeco.javacpp.avcodec;
 import org.bytedeco.javacpp.opencv_core;
@@ -40,6 +41,12 @@ public class VirtualCameraService implements Runnable {
   //  private long startTime = 0;
   private String info = null;
   private final Logger logger = LoggerFactory.getLogger(VirtualCameraService.class);
+
+  @Autowired
+  private AmqpService amqpService;
+
+  @Autowired
+  private DeviceInfo deviceInfo;
 
   /**
    * 调用此方法之后一定要init()
@@ -101,9 +108,6 @@ public class VirtualCameraService implements Runnable {
     }
   }
 
-  @Autowired
-  private FaceController faceController;
-
   private void searchFace(BufferedImage image) {
 //    System.err.println(image.imageData().getString());
 //    String image64 = Base64.encodeBase64String(image.imageData().getString().getBytes());
@@ -111,7 +115,10 @@ public class VirtualCameraService implements Runnable {
 //    String image64 = MatToBase64(image);
     FaceDto faceDto = new FaceDto();
     faceDto.setImage(bufferedImageToBase64(image));
-    faceController.faceReco(faceDto);
+    faceDto.setTime(System.currentTimeMillis());
+    faceDto.setLocation(deviceInfo.getLocation());
+    amqpService.sendFace(false, faceDto);
+//    faceController.faceReco(faceDto);
   }
 
   /**

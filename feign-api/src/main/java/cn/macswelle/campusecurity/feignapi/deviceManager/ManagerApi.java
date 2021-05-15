@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 用户向设备管理中心发送信息的api
+ * 前端向设备管理中心发送信息的api
  * 最后一个特殊，是adapter向设备管理中心发送信息的api
  */
 @FeignClient(value = "devicemanage", path = "/device")
@@ -38,7 +38,4 @@ public interface ManagerApi {
     List<RecordDto2> getRecords(@RequestParam("locationId") String locationId,
                                 @RequestParam("start") Long start,
                                 @RequestParam("end") Long end);
-
-    @RequestMapping(value = "/admin/addRecord", method = RequestMethod.POST)
-    void addRecord(@RequestBody RecordDto dto);
 }

@@ -15,12 +15,16 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @SpringBootApplication
 @EnableCaching
 @EnableDiscoveryClient
+@ComponentScan({"cn.macswelle.campusecurity.sdk.controller",
+  "cn.macswelle.campusecurity.sdk.service",
+  "cn.macswelle.campusecurity.sdk"})
 @EnableFeignClients("cn.macswelle.campusecurity.feignapi.deviceManager")
 public class NvrlistenerApplication {
 
@@ -32,10 +36,4 @@ public class NvrlistenerApplication {
   public ObjectMapper getMapper() {
     return new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
   }
-
-  @Bean
-  public Queue HelloQueue() {
-    return new Queue("faceDto");
-  }
-
 }

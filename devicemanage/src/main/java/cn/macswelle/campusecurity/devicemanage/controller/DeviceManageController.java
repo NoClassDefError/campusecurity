@@ -57,10 +57,4 @@ public class DeviceManageController implements ManagerApi {
     public List<RecordDto2> getRecords(String locationId, Long start, Long end) {
         return deviceManageService.getRecords(locationId, start, end);
     }
-
-    @RequestMapping(value = "/admin/addRecord", method = RequestMethod.POST)
-    @Override
-    public void addRecord(RecordDto dto) {
-        deviceManageService.addRecord(dto);
-    }
 }

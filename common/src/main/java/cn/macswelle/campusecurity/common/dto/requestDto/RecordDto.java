@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class RecordDto {
-    private Long createTime;
-    private String event;
-    private String file;
-    private String location;
-    private String personnel;
+    private Long createTime = System.currentTimeMillis();
+    private String event = null;
+    private String file = null;
+    private String location = null;
+    private String personnel = null;
 }

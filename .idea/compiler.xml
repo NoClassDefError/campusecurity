@@ -7,17 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="hardware_sdk" />
         <module name="userservice" />
         <module name="commons" />
-        <module name="tcpadapter" />
+        <module name="gateway2" />
+        <module name="data_process" />
         <module name="feign-api" />
         <module name="nvrlistener" />
         <module name="eureka" />
-        <module name="gateway2" />
         <module name="devicemanage" />
         <module name="configserver" />
         <module name="gateway" />
-        <module name="facial_recognision" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -37,20 +37,20 @@
       <module name="center" options="-parameters" />
       <module name="common" options="-parameters" />
       <module name="configserver" options="-parameters" />
+      <module name="data_process" options="-parameters" />
       <module name="database" options="-parameters" />
       <module name="dataprocess" options="-parameters" />
       <module name="devicemanage" options="-parameters" />
       <module name="drivers" options="-parameters" />
       <module name="eureka" options="-parameters" />
-      <module name="facial_recognision" options="-parameters" />
       <module name="feign-api" options="-parameters" />
       <module name="feignApi" options="-parameters" />
       <module name="frontend" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="gateway (1)" options="-parameters" />
       <module name="gateway2" options="-parameters" />
+      <module name="hardware_sdk" options="-parameters" />
       <module name="nvrlistener" options="-parameters" />
-      <module name="tcpadapter" options="-parameters" />
       <module name="userservice" options="-parameters" />
     </option>
   </component>

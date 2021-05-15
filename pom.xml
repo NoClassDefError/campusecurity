@@ -26,11 +26,11 @@
         <module>configserver</module>
         <module>common</module>
         <module>nvrlistener</module>
-        <module>tcpadapter</module>
+        <module>hardware_sdk</module>
         <module>feign-api</module>
         <module>database</module>
         <module>gateway2</module>
-        <module>facial_recognision</module>
+        <module>data_process</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
